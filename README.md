@@ -1,2 +1,23 @@
 # todo-10
-week 2 - todo list를 만들어 보자 - 김현영, 임학수
+
+# Client
+## Install
+```
+npm install
+```
+
+## Build
+```
+npm run build
+```
+Build in production mode.
+
+## Dev Server
+```
+npm run dev
+```
+
+## Test
+```
+npm run test
+```
