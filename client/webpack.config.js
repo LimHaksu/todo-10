@@ -28,6 +28,13 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    contentBase: path.join(__dirname, "./dist"),
+    publicPath: "/js/",
+    compress: true,
+    port: 5500,
+    hot: true,
+  },
   devtool: "source-map",
   mode: "development",
 };
