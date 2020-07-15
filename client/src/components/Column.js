@@ -11,5 +11,9 @@ export default class Column extends Element {
     this.$todos.push(1, new Todo());
     this.$todos.push(2, new Todo());
     this.$todos.push(3, new Todo());
+    this.$todos.push(4, new Todo());
+    this.$todos.push(5, new Todo());
+    this.$todos.push(6, new Todo());
+    this.$todos.push(7, new Todo());
   }
 }
