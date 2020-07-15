@@ -13,6 +13,10 @@ export default class List extends Element {
     this.$list = {}; //[Li, custom Element]
   }
 
+  getCount() {
+    return Object.keys(this.$list).length;
+  }
+
   push(key, element) {
     if (!(typeof key === "string" || typeof key === "number")) {
       throw new Error("Key should be a string or a number.");
