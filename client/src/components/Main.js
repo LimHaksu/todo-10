@@ -13,6 +13,10 @@ export default class Main extends Element {
     kanban.push(1, new Column());
     kanban.push(2, new Column());
     kanban.push(3, new Column());
+    kanban.push(4, new Column());
+    kanban.push(5, new Column());
+    kanban.push(6, new Column());
+    kanban.push(7, new Column());
     this.appendChild(kanban);
   }
 }
