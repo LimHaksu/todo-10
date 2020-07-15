@@ -3,6 +3,7 @@ import Header from "./Header";
 import Kanban from "./Kanban";
 import Column from "./Column";
 import Todo from "./Todo";
+import Menu from "./Menu";
 
 export default class Main extends Element {
   constructor() {
@@ -23,5 +24,8 @@ export default class Main extends Element {
     kanban.push(5, new Column("Doing", createTestTodos()));
     kanban.push(6, new Column("Done", createTestTodos()));
     this.appendChild(kanban);
+
+    const menu = new Menu();
+    this.appendChild(menu);
   }
 }
