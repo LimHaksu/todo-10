@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100vw;
+  height: 60px;
+  background: yellowgreen;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  color: white;
+  background-color: black;
+
+  .logo {
+    font-size: 24px;
+  }
+}
