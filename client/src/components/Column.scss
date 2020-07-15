@@ -1,0 +1,26 @@
+.column {
+  width: 330px;
+  height: 100%;
+  border-radius: 20px;
+  overflow: auto;
+  margin: 1rem;
+  padding: 1rem;
+
+  background-color: #eff1f3;
+  box-shadow: #d0d2d4 0 3px 5px;
+
+  .column-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .column-todo-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d0d2d4;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+  }
+}
