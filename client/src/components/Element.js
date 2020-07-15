@@ -8,7 +8,7 @@ export default class Element {
     }
 
     if (option.class) {
-      Array.from(option.calss).forEach(this.$el.classList.add);
+      Array.from(option.class).forEach(this.$el.classList.add);
     }
   }
 
