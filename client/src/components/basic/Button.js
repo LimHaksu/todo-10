@@ -3,15 +3,21 @@ import Element from "./Element";
 export default class Button extends Element {
   /**
    *
-   * @param {string} text - Button text
+   * @param {string | Element} content - Button text
    * @param {(event) => void} onClick
    * @param {Option} option
    */
-  constructor(text, onClick, option) {
+  constructor(content, onClick, option) {
     super("button", option);
 
-    if (text === null || text === undefined) text = "Please set button text";
-    this.getDom().textContent = text;
+    if (content && typeof content === "string")
+      this.getDom().textContent = content;
+    else if (
+      typeof content === "object" &&
+      Object.getPrototypeOf(content) instanceof Element
+    ) {
+      this.appendChild(content);
+    }
     if (onClick) this.getDom().addEventListener("click", onClick);
   }
 }

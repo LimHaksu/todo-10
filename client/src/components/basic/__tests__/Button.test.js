@@ -7,6 +7,12 @@ describe("Button", () => {
     getByText(button.getDom(), "btnn");
   });
 
+  it("can also set Element", () => {
+    const el = new Button("btnn");
+    const button = new Button(el);
+    getByText(button.getDom(), "btnn");
+  });
+
   it("can take onClick", () => {
     const onClick = jest.fn();
     const button = new Button("btnn", onClick);
