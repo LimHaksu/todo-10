@@ -8,7 +8,11 @@ export default class Element {
     }
 
     if (option.class) {
-      Array.from(option.class).forEach(this.$el.classList.add);
+      Array.from(option.class).forEach((t) => this.$el.classList.add(t));
+    }
+
+    if (option.text) {
+      this.$el.textContent = option.text;
     }
   }
 
@@ -28,7 +32,11 @@ export default class Element {
     this.$el.addEventListener(...args);
   }
 
+  removeEventListener(...args) {
+    this.$el.removeEventListener(...args);
+  }
+
   setText(text) {
-    this.$el = textl;
+    this.$el.textContent = text;
   }
 }
