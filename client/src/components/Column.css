@@ -1,5 +1,11 @@
 .column {
   width: 300px;
-  background-color: brown;
+  height: 100%;
+  border-radius: 20px;
+  overflow: auto;
   margin: 1rem;
+  padding: 1rem;
+
+  background-color: #eff1f3;
+  box-shadow: #d0d2d4 0 3px 5px;
 }
