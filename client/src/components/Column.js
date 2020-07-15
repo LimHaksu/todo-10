@@ -45,7 +45,9 @@ export default class Column extends Element {
     this.appendChild(header);
 
     this.$todos = new List(true);
-    this.appendChild(this.$todos);
+    const todosWrapper = new Element("div", { class: "column-todos-wrapper" });
+    todosWrapper.appendChild(this.$todos);
+    this.appendChild(todosWrapper);
 
     todos.forEach(([i, todo]) => {
       this.addTodo(i, todo);
