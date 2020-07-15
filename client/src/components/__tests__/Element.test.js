@@ -1,10 +1,5 @@
 import Element from "../Element";
-import {
-  getByText,
-  queryByTestId,
-  queryByText,
-  fireEvent,
-} from "@testing-library/dom";
+import { getByText, queryByText, fireEvent } from "@testing-library/dom";
 
 describe("Element", () => {
   it("creates dom correctly with options", () => {
