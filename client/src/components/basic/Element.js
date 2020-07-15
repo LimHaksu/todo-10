@@ -16,6 +16,8 @@ export default class Element {
     if (option.text) {
       this.$el.textContent = option.text;
     }
+
+    this.classList = this.$el.classList;
   }
 
   getDom() {
