@@ -6,6 +6,7 @@ import Column from "./Column";
 export default class Main extends Element {
   constructor() {
     super("div");
+    this.$el = document.getElementById("app");
     this.appendChild(new Header());
 
     const kanban = new Kanban();
