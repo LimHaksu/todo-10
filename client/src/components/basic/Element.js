@@ -8,7 +8,9 @@ export default class Element {
     }
 
     if (option.class) {
-      Array.from(option.class).forEach((t) => this.$el.classList.add(t));
+      if (typeof option.class === "string")
+        this.$el.classList.add(option.class);
+      else Array.from(option.class).forEach((t) => this.$el.classList.add(t));
     }
 
     if (option.text) {

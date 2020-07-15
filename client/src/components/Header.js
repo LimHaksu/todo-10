@@ -1,8 +1,8 @@
-import Element from "./Element";
+import Element from "./basic/Element";
 import "./Header.css";
 
 export default class Header extends Element {
   constructor() {
-    super("header");
+    super("header", { class: ["header"] });
   }
 }

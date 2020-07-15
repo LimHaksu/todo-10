@@ -1,4 +1,4 @@
-import Element from "./Element";
+import { Element } from "./basic";
 import "./Button.css";
 
 export default class Button extends Element {
