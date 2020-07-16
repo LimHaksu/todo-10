@@ -2,7 +2,7 @@ export default class Element {
   /**
    *
    * @param {string} tag
-   * @param {{id?: string, class?: string | string[], text?: string}} option
+   * @param {{id?: string, class?: string | string[], text?: string, children?: Element | Element[]}} option
    */
   constructor(tag, option) {
     this.$el = document.createElement(tag);
@@ -20,6 +20,15 @@ export default class Element {
 
     if (option.text) {
       this.$el.textContent = option.text;
+    }
+
+    if (option.children) {
+      const children = option.children;
+      if (Array.isArray(children)) {
+        children.forEach((element) => this.appendChild(element));
+      } else {
+        this.appendChild(children);
+      }
     }
 
     this.classList = this.$el.classList;
