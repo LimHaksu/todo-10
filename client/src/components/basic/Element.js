@@ -1,4 +1,9 @@
 export default class Element {
+  /**
+   *
+   * @param {string} tag
+   * @param {{id?: string, class?: string | string[], text?: string}} option
+   */
   constructor(tag, option) {
     this.$el = document.createElement(tag);
 

@@ -1,13 +1,12 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+import createError from "http-errors";
+import express from "express";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
 
-var indexRouter = require("./routes/index");
-const apiRouter = require("./routes/api");
+import indexRouter from "./routes/index";
+import apiRouter from "./routes/api";
 
-var app = express();
+const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());

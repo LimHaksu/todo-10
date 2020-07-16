@@ -1,8 +1,14 @@
 .todo {
-  width: 200px;
-  height: 200px;
+  width: 70%;
+  min-height: 100px;
   background: white;
   margin: 1rem;
   padding: 1rem;
   border-radius: 1rem;
+}
+
+.todo .todo-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

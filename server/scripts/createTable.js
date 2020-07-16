@@ -1,6 +1,9 @@
-import dotenv from "dotenv";
-import path from "path";
-import mysql from "mysql2";
+// import dotenv from "dotenv";
+// import path from "path";
+// import mysql from "mysql2";
+const dotenv = require("dotenv");
+const path = require("path");
+const mysql = require("mysql2");
 
 dotenv.config({ path: path.join(__dirname, "../.env") });
 
