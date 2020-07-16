@@ -31,21 +31,26 @@ export default class Element {
 
   appendChild(el) {
     this.$el.appendChild(el.$el);
+    return this;
   }
 
   removeChild(el) {
     this.$el.removeChild(el.$el);
+    return this;
   }
 
   addEventListener(...args) {
     this.$el.addEventListener(...args);
+    return this;
   }
 
   removeEventListener(...args) {
     this.$el.removeEventListener(...args);
+    return this;
   }
 
   setText(text) {
     this.$el.textContent = text;
+    return this;
   }
 }
