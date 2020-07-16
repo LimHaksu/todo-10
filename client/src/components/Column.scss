@@ -24,7 +24,43 @@
   }
 
   .column-todos-wrapper {
-    height: calc(100% - 20px);
+    height: calc(100% - 20px - 138px);
     overflow: auto;
+  }
+
+  .new-todo-wrapper {
+    display: block;
+    width: 100%;
+    margin: 1rem 0 1rem 0;
+    .todo-textarea {
+      display: block;
+      min-height: 50px;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.5rem;
+      resize: vertical;
+    }
+    .button-wrapper {
+      display: flex;
+      justify-content: space-between;
+      .button {
+        height: 40px;
+        width: 47%;
+        margin: 0.5rem 0;
+        border-radius: 0.5rem;
+        box-shadow: none;
+        border: 0.05rem solid;
+        cursor: pointer;
+      }
+      .todo-add {
+        background-color: #94d3a2;
+        border-color: #89c396;
+        color: white;
+      }
+      .todo-cancel {
+        background-color: #fafbfc;
+        border-color: #999999;
+      }
+    }
   }
 }

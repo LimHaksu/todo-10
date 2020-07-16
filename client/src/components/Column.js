@@ -2,6 +2,33 @@ import { List, Element, H } from "./basic";
 import Todo from "./Todo";
 import "./Column.scss";
 import Button from "./basic/Button";
+import TextArea from "./basic/TextArea";
+
+const handleAddButtonClick = () => {};
+const handleCancelButtonClick = () => {};
+
+class NewTodoWrapper extends Element {
+  constructor() {
+    super("div", { class: "new-todo-wrapper" });
+
+    this.$textarea = new TextArea({
+      class: "todo-textarea",
+      placeholder: "Enter a note",
+    });
+    this.appendChild(this.$textarea);
+
+    const buttonWrapper = new Element("div", { class: "button-wrapper" });
+    this.appendChild(buttonWrapper);
+    this.$addButton = new Button("Add", handleAddButtonClick, {
+      class: ["button", "todo-add"],
+    });
+    this.$cancelButton = new Button("Cancel", handleCancelButtonClick, {
+      class: ["button", "todo-cancel"],
+    });
+    buttonWrapper.appendChild(this.$addButton);
+    buttonWrapper.appendChild(this.$cancelButton);
+  }
+}
 
 export default class Column extends Element {
   /**
@@ -43,6 +70,9 @@ export default class Column extends Element {
     header.appendChild(headerLeft);
     header.appendChild(headerRight);
     this.appendChild(header);
+
+    this.$newTodoWrapper = new NewTodoWrapper();
+    this.appendChild(this.$newTodoWrapper);
 
     this.$todos = new List(true);
     const todosWrapper = new Element("div", { class: "column-todos-wrapper" });
