@@ -28,6 +28,9 @@ router.get("/todos", (req, res) => {
     .filter((data) => data !== null);
   res.json({ result });
 });
+
+router.get("/columns", (req, res) => {
+  res.json({ result: [{ column_id: 1, title: "column" }] });
 });
 
 module.exports = router;
