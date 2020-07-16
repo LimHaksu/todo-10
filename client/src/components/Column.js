@@ -4,26 +4,32 @@ import "./Column.scss";
 import Button from "./basic/Button";
 import TextArea from "./basic/TextArea";
 
-const handleAddButtonClick = () => {};
-const handleCancelButtonClick = () => {};
+const handleAddButtonClick = (event) => {
+  event.preventDefault();
+};
+const handleCancelButtonClick = (event) => {
+  event.preventDefault();
+};
 
-class NewTodoWrapper extends Element {
+class NewTodoForm extends Element {
   constructor() {
-    super("div", { class: "new-todo-wrapper" });
+    super("form", { class: "new-todo-form" });
 
     this.$textarea = new TextArea({
-      class: "todo-textarea",
+      name: "todo-content",
+      class: "new-todo-textarea",
       placeholder: "Enter a note",
     });
     this.appendChild(this.$textarea);
 
-    const buttonWrapper = new Element("div", { class: "button-wrapper" });
+    const buttonWrapper = new Element("div", { class: "flex-spacebetween" });
     this.appendChild(buttonWrapper);
     this.$addButton = new Button("Add", handleAddButtonClick, {
-      class: ["button", "todo-add"],
+      class: ["button-form", "button-green"],
+      type: "submit",
     });
     this.$cancelButton = new Button("Cancel", handleCancelButtonClick, {
-      class: ["button", "todo-cancel"],
+      class: ["button-form", "button-grey"],
     });
     buttonWrapper.appendChild(this.$addButton);
     buttonWrapper.appendChild(this.$cancelButton);
@@ -71,8 +77,8 @@ export default class Column extends Element {
     header.appendChild(headerRight);
     this.appendChild(header);
 
-    this.$newTodoWrapper = new NewTodoWrapper();
-    this.appendChild(this.$newTodoWrapper);
+    this.$newTodoForm = new NewTodoForm();
+    this.appendChild(this.$newTodoForm);
 
     this.$todos = new List(true);
     const todosWrapper = new Element("div", { class: "column-todos-wrapper" });
