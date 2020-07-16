@@ -19,5 +19,11 @@ export default class Button extends Element {
       this.appendChild(content);
     }
     if (onClick) this.getDom().addEventListener("click", onClick);
+
+    if (option) {
+      if (option.type) {
+        this.getDom().type = option.type;
+      }
+    }
   }
 }

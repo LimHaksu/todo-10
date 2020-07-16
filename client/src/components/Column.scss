@@ -28,11 +28,11 @@
     overflow: auto;
   }
 
-  .new-todo-wrapper {
+  .new-todo-form {
     display: block;
     width: 100%;
     margin: 1rem 0 1rem 0;
-    .todo-textarea {
+    .new-todo-textarea {
       display: block;
       min-height: 50px;
       width: 100%;
@@ -40,27 +40,8 @@
       padding: 0.5rem;
       resize: vertical;
     }
-    .button-wrapper {
-      display: flex;
-      justify-content: space-between;
-      .button {
-        height: 40px;
-        width: 47%;
-        margin: 0.5rem 0;
-        border-radius: 0.5rem;
-        box-shadow: none;
-        border: 0.05rem solid;
-        cursor: pointer;
-      }
-      .todo-add {
-        background-color: #94d3a2;
-        border-color: #89c396;
-        color: white;
-      }
-      .todo-cancel {
-        background-color: #fafbfc;
-        border-color: #999999;
-      }
+    .button-form {
+      width: 47%;
     }
   }
 }
