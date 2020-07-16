@@ -1,11 +1,16 @@
-version: '2'
+version: "2"
 
 services:
-    nginx:
-        image: nginx
-        container_name: nginx
-        volumes: 
-            - "./docker/nginx/nginx.conf:/etc/nginx/nginx.conf"
-            - "./client/dist:/etc/nginx/http"
-        ports: 
-            - 8080:80
+  nginx:
+    image: nginx
+    container_name: nginx
+    volumes:
+      - "./docker/nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - "./client/dist:/etc/nginx/http"
+    ports:
+      - 8080:80
+  app:
+    build:
+      context: ./server
+    #   dockerfile: ./docker/app/Dockerfile
+    container_name: app
