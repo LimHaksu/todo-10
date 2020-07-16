@@ -1,8 +1,6 @@
-import { List, Element, H } from "./basic";
-import Todo from "./Todo";
+import { List, Element, H, Todo, Button, Textarea } from "./basic";
+import ModalColumnTitleEdit from "./ModalColumnTitleEdit";
 import "./Column.scss";
-import Button from "./basic/Button";
-import TextArea from "./basic/TextArea";
 
 const handleAddButtonClick = (event) => {
   event.preventDefault();
@@ -10,12 +8,16 @@ const handleAddButtonClick = (event) => {
 const handleCancelButtonClick = (event) => {
   event.preventDefault();
 };
+const handleColumnTitleDoubleClick = (event, columnTitle) => {
+  event.preventDefault();
+  new ModalColumnTitleEdit(columnTitle);
+};
 
 class NewTodoForm extends Element {
   constructor() {
     super("form", { class: "new-todo-form" });
 
-    this.$textarea = new TextArea({
+    this.$textarea = new Textarea({
       name: "todo-content",
       class: "new-todo-textarea",
       placeholder: "Enter a note",
@@ -52,7 +54,11 @@ export default class Column extends Element {
       class: "column-todo-count",
     });
     headerLeft.appendChild(this.$count);
-    this.$title = new H(2, title);
+    this.$title = new H(2, title, {
+      ondblclick: (event) => {
+        handleColumnTitleDoubleClick(event, title);
+      },
+    });
     headerLeft.appendChild(this.$title);
 
     const headerRight = new Element("div");
