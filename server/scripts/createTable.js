@@ -1,22 +1,15 @@
-// import dotenv from "dotenv";
-// import path from "path";
-// import mysql from "mysql2";
-const dotenv = require("dotenv");
-const path = require("path");
-const mysql = require("mysql2");
-
-dotenv.config({ path: path.join(__dirname, "../.env") });
+const sendQueries = require("./sendQueries");
 
 const queries = [
   `create table user(
-    id int not null,
+    id int not null AUTO_INCREMENT,
     password varchar(100) not null,
     username varchar(20) not null,
 
     constraint user_pk primary key (id)
 );`,
   `create table todo_column(
-    id int not null,
+    id int not null AUTO_INCREMENT,
     idx int not null,
     title varchar(100) not null,
     user_id int not null,
@@ -28,7 +21,7 @@ const queries = [
     constraint column_fk foreign key (user_id) references user(id) on delete cascade on update cascade
 );`,
   `create table todo(
-	id int not null,
+	id int not null AUTO_INCREMENT,
 	user_id int not null,
 	column_id int not null,
 	prev_todo_id int,
@@ -40,7 +33,7 @@ const queries = [
 	constraint todo_fk foreign key (column_id) references todo_column(id) on delete cascade on update cascade
 );`,
   `create table log(
-    id int not null,
+    id int not null AUTO_INCREMENT,
     user_id int not null,
     action_type varchar(6) not null,
     todo_id int,
@@ -54,33 +47,4 @@ const queries = [
 );`,
 ];
 
-const con = mysql.createConnection({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
-
-const sendQuery = (con, query, resolve) => {
-  con.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-    con.query(query, function (err, result) {
-      if (err) throw err;
-      console.log("Table created");
-      resolve();
-    });
-  });
-};
-
-Promise.all(
-  queries.map(
-    (query) =>
-      new Promise((resolve, reject) => {
-        sendQuery(con, query, resolve);
-      })
-  )
-).then(() => {
-  con.close();
-});
+sendQueries(queries);
