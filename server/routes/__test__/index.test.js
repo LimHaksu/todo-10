@@ -6,7 +6,11 @@ describe("Test /", () => {
     request(app)
       .get("/")
       .then((response) => {
-        expect(response.text).toBe(`{"title":"Express"}`);
+        expect(response.text).toBe(
+          JSON.stringify({
+            title: "Express",
+          })
+        );
         done();
       });
   });
