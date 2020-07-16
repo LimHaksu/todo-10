@@ -18,24 +18,4 @@ describe("GET /api/columns", () => {
         }
       });
   });
-
-  it("gives todos", (done) => {
-    server
-      .get("/api/todos?columns=1")
-      .expect("Content-Type", /json/)
-      .expect(200)
-      .expect({
-        result: {
-          column_id: 1,
-          todos: [
-            { id: 1, username: "user1", content: "todo1" },
-            { id: 2, username: "user1", content: "todo2" },
-          ],
-        },
-      })
-      .end((err, res) => {
-        if (err) return done(err);
-        if (res.body) return done();
-      });
-  });
 });
