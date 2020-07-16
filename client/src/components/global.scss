@@ -2,6 +2,11 @@
   display: flex;
 }
 
+.flex-spacebetween {
+  display: flex;
+  justify-content: space-between;
+}
+
 .flex-grow-1 {
   flex-grow: 1;
 }
@@ -35,7 +40,6 @@
 }
 
 .reset-button-style {
-  background: none;
   border: none;
   cursor: pointer;
 }

@@ -4,12 +4,20 @@ import Kanban from "./Kanban";
 import Column from "./Column";
 import Todo from "./Todo";
 import Menu from "./Menu";
+import Modal from "./basic/Modal";
+import Button from "./basic/Button";
 
 export default class Main extends Element {
   constructor() {
     super("div");
     this.$el = document.getElementById("app");
     this.appendChild(new Header());
+
+    this.appendChild(
+      new Button("show modal", () => {
+        new Modal("title", new Element("div"));
+      })
+    );
 
     const kanban = new Kanban();
 
