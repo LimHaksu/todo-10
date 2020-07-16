@@ -7,7 +7,7 @@ import TextArea from "./basic/TextArea";
 const handleAddButtonClick = () => {};
 const handleCancelButtonClick = () => {};
 
-class newTodoWrapper extends Element {
+class NewTodoWrapper extends Element {
   constructor() {
     super("div", { class: "new-todo-wrapper" });
 
@@ -71,7 +71,7 @@ export default class Column extends Element {
     header.appendChild(headerRight);
     this.appendChild(header);
 
-    this.$newTodoWrapper = new newTodoWrapper();
+    this.$newTodoWrapper = new NewTodoWrapper();
     this.appendChild(this.$newTodoWrapper);
 
     this.$todos = new List(true);
