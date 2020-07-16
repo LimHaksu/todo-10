@@ -1,9 +1,4 @@
-const { Router } = require("express");
-
-const router = Router();
-
-/* GET home page. */
-router.get("/todos", (req, res) => {
+export default (req, res) => {
   if (!req.query.columns) {
     res.status(400);
     res.json({
@@ -27,10 +22,4 @@ router.get("/todos", (req, res) => {
     })
     .filter((data) => data !== null);
   res.json({ result });
-});
-
-router.get("/columns", (req, res) => {
-  res.json({ result: [{ column_id: 1, title: "column" }] });
-});
-
-module.exports = router;
+};
