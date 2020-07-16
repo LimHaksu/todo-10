@@ -2,8 +2,9 @@
   "name": "todo-10-server",
   "version": "0.0.0",
   "scripts": {
-    "test": "jest --watch",
-    "start": "babel-node ./bin/www"
+    "start": "babel-node ./bin/www",
+    "dev": "NODE_ENV=development nodemon --exec babel-node ./bin/www",
+    "test": "jest --watch"
   },
   "dependencies": {
     "@babel/cli": "^7.10.5",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "babel-jest": "^26.1.0",
     "jest": "^26.1.0",
+    "nodemon": "^2.0.4",
     "supertest": "^4.0.2"
   }
 }
