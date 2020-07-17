@@ -1,9 +1,7 @@
-import Element from "./Element";
-import "./Modal.scss";
-import { H } from ".";
-import Button from "./Button";
+import { H } from "..";
+import Button from "../Button";
 
-class ModalContent extends Element {
+export default class ModalContent extends Element {
   constructor(title, content) {
     super("div", { class: "modal-content" });
     const titleH = new H(1, title);
@@ -31,25 +29,5 @@ class ModalContent extends Element {
     this.addEventListener("click", (e) => {
       e.stopPropagation();
     });
-  }
-}
-
-export default class Modal extends Element {
-  constructor(title, content) {
-    super("div", { class: "modal-overlay" });
-    this.appendChild(new ModalContent(title, content));
-
-    document.body.appendChild(this.$el);
-    this.addEventListener("modalclose", () => {
-      this.close();
-    });
-
-    this.addEventListener("click", () => {
-      this.close();
-    });
-  }
-
-  close() {
-    document.body.removeChild(this.$el);
   }
 }

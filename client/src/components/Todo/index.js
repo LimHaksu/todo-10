@@ -1,6 +1,6 @@
-import Element from "./basic/Element";
+import Element from "../basic/Element";
 import "./Todo.css";
-import Button from "./basic/Button";
+import Button from "../basic/Button";
 
 export default class Todo extends Element {
   constructor({ id, content, username }) {

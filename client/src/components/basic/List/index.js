@@ -1,11 +1,5 @@
-import Element from "./Element";
-
-class Li extends Element {
-  constructor(content) {
-    super("li");
-    super.appendChild(content);
-  }
-}
+import Element from "../Element";
+import Li from "./Li";
 
 export default class List extends Element {
   constructor(ordered = true, option = null) {

@@ -1,4 +1,4 @@
-import { Element } from "./basic";
+import { Element } from "../basic";
 import "./Log.css";
 
 export default class Log extends Element {

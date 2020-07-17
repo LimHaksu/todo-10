@@ -1,5 +1,5 @@
-import { Element, List } from "./basic";
-import Log from "./Log";
+import { Element, List } from "../basic";
+import Log from "../Log";
 import "./Menu.css";
 
 export default class Menu extends Element {
