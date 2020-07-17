@@ -1,0 +1,11 @@
+.kanban {
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  width: 100vw;
+  height: calc(100vh - 60px);
+}
+
+.kanban > li {
+  height: 80%;
+}
