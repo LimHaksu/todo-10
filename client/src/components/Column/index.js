@@ -1,39 +1,12 @@
-import { List, Element, H } from "./basic";
-import Todo from "./Todo";
+import { List, Element, H, Todo, Button } from "../basic";
+import ModalColumnTitleEdit from "../ModalColumnTitleEdit";
+import NewTodoForm from "./NewTodoForm";
 import "./Column.scss";
-import Button from "./basic/Button";
-import TextArea from "./basic/TextArea";
 
-const handleAddButtonClick = (event) => {
+const handleColumnTitleDoubleClick = (event, columnTitle) => {
   event.preventDefault();
+  new ModalColumnTitleEdit(columnTitle);
 };
-const handleCancelButtonClick = (event) => {
-  event.preventDefault();
-};
-
-class NewTodoForm extends Element {
-  constructor() {
-    super("form", { class: "form" });
-
-    this.$textarea = new TextArea({
-      name: "todo-content",
-      placeholder: "Enter a note",
-    });
-    this.appendChild(this.$textarea);
-
-    const buttonWrapper = new Element("div", { class: "flex-spacebetween" });
-    this.appendChild(buttonWrapper);
-    this.$addButton = new Button("Add", handleAddButtonClick, {
-      class: ["button-form", "button-green"],
-      type: "submit",
-    });
-    this.$cancelButton = new Button("Cancel", handleCancelButtonClick, {
-      class: ["button-form", "button-grey"],
-    });
-    buttonWrapper.appendChild(this.$addButton);
-    buttonWrapper.appendChild(this.$cancelButton);
-  }
-}
 
 export default class Column extends Element {
   /**
@@ -51,7 +24,12 @@ export default class Column extends Element {
       class: "column-todo-count",
     });
     headerLeft.appendChild(this.$count);
-    this.$title = new H(2, title);
+
+    this.$title = new H(2, title, {
+      ondblclick: (event) => {
+        handleColumnTitleDoubleClick(event, title);
+      },
+    });
     headerLeft.appendChild(this.$title);
 
     const headerRight = new Element("div");

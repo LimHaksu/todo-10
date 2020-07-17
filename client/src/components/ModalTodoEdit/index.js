@@ -1,7 +1,7 @@
 import { Element, H } from "../basic";
 import Modal from "../basic/Modal";
 import Button from "../basic/Button";
-import TextArea from "../basic/TextArea";
+import Textarea from "../basic/Textarea";
 
 export default class ModalTodoEdit extends Modal {
   constructor({ id, content, onEdit }) {
@@ -16,7 +16,7 @@ export default class ModalTodoEdit extends Modal {
       this.$el.dispatchEvent(closeEvent);
     });
 
-    this.$textarea = new TextArea({
+    this.$textarea = new Textarea({
       placeholder: "Enter a note...",
       name: "content",
     });

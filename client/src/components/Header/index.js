@@ -1,7 +1,7 @@
-import Element from "./basic/Element";
+import Element from "../basic/Element";
 import "./Header.scss";
-import H from "./basic/H";
-import Button from "./basic/Button";
+import H from "../basic/H";
+import Button from "../basic/Button";
 
 export default class Header extends Element {
   constructor() {
