@@ -9,11 +9,10 @@ const handleCancelButtonClick = (event) => {
 
 export default class NewTodoForm extends Element {
   constructor() {
-    super("form", { class: "new-todo-form" });
+    super("form", { class: "form" });
 
     this.$textarea = new Textarea({
       name: "todo-content",
-      class: "new-todo-textarea",
       placeholder: "Enter a note",
     });
     this.appendChild(this.$textarea);

@@ -63,3 +63,31 @@
   background-color: #fafbfc;
   border-color: #999999;
 }
+
+.form {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  textarea,
+  input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+  }
+
+  textarea {
+    min-height: 50px;
+    resize: vertical;
+  }
+
+  .button-form {
+    width: 47%;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+}

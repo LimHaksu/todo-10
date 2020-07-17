@@ -24,6 +24,7 @@ export default class Column extends Element {
       class: "column-todo-count",
     });
     headerLeft.appendChild(this.$count);
+
     this.$title = new H(2, title, {
       ondblclick: (event) => {
         handleColumnTitleDoubleClick(event, title);

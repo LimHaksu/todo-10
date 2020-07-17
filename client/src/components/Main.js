@@ -4,8 +4,8 @@ import Kanban from "./Kanban";
 import Column from "./Column";
 import Todo from "./Todo";
 import Menu from "./Menu";
-import Modal from "./basic/Modal";
 import Button from "./basic/Button";
+import ModalTodoEdit from "./ModalTodoEdit";
 
 export default class Main extends Element {
   constructor() {
@@ -14,9 +14,19 @@ export default class Main extends Element {
     this.appendChild(new Header());
 
     this.appendChild(
-      new Button("show modal", () => {
-        new Modal("title", new Element("div"));
-      })
+      new Button(
+        "show todo edit modal",
+        () => {
+          new ModalTodoEdit({
+            content: "todotodotodotodadsf;lkjas",
+            onEdit: () => {
+              alert("onEdit Todo");
+            },
+            id: 1,
+          });
+        },
+        { class: ["button-form", "button-green"] }
+      )
     );
 
     const kanban = new Kanban();

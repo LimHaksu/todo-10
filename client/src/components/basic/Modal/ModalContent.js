@@ -1,5 +1,6 @@
 import { H } from "..";
 import Button from "../Button";
+import Element from "../Element";
 
 export default class ModalContent extends Element {
   constructor(title, content) {

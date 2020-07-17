@@ -1,6 +1,6 @@
 import Element from "./Element";
 
-export default class TextArea extends Element {
+export default class Textarea extends Element {
   /**
    *
    * @param {{
