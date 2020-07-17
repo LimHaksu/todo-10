@@ -3,9 +3,13 @@ import ModalColumnTitleEdit from "../ModalColumnTitleEdit";
 import NewTodoForm from "./NewTodoForm";
 import "./Column.scss";
 
+const onTitleEdit = () => {
+  alert("제목 수정 버튼 클릭");
+};
+
 const handleColumnTitleDoubleClick = (event, columnTitle) => {
   event.preventDefault();
-  new ModalColumnTitleEdit(columnTitle);
+  new ModalColumnTitleEdit({ id: 1, columnTitle, onTitleEdit });
 };
 
 export default class Column extends Element {
