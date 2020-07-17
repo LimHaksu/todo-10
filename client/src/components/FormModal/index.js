@@ -16,9 +16,8 @@ export default class Form extends Element {
       evt.preventDefault();
 
       const content =
-        inputType === "input"
-          ? this.$inputContent.getDom().value
-          : this.$inputContent.getDom().textContent;
+        this.$inputContent.getDom().value ||
+        this.$inputContent.getDom().textContent;
 
       onSubmit(content);
       const closeEvent = new Event("modalclose", { bubbles: true });
