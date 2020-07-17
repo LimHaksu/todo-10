@@ -27,21 +27,4 @@
     height: calc(100% - 20px - 138px);
     overflow: auto;
   }
-
-  .new-todo-form {
-    display: block;
-    width: 100%;
-    margin: 1rem 0 1rem 0;
-    .new-todo-textarea {
-      display: block;
-      min-height: 50px;
-      width: 100%;
-      box-sizing: border-box;
-      padding: 0.5rem;
-      resize: vertical;
-    }
-    .button-form {
-      width: 47%;
-    }
-  }
 }
