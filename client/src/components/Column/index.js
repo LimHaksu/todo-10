@@ -1,4 +1,4 @@
-import { List, Element, H, Todo, Button, Textarea } from "../basic";
+import { List, Element, H, Todo, Button } from "../basic";
 import ModalColumnTitleEdit from "../ModalColumnTitleEdit";
 import NewTodoForm from "./NewTodoForm";
 import "./Column.scss";
