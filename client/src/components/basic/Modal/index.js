@@ -18,6 +18,6 @@ export default class Modal extends Element {
   }
 
   close() {
-    document.body.removeChild(this.$el);
+    this.removeSelf();
   }
 }

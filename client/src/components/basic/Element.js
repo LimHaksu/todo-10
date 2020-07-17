@@ -62,4 +62,8 @@ export default class Element {
     this.$el.textContent = text;
     return this;
   }
+
+  removeSelf() {
+    this.getDom().parentNode.removeChild(this.getDom());
+  }
 }
