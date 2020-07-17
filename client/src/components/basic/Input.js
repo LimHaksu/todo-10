@@ -11,7 +11,7 @@ export default class Input extends Element {
    */
   constructor(option) {
     super("input", option);
-
+    if (!option) return;
     if (option.placeholder) {
       this.getDom().placeholder = option.placeholder;
     }
