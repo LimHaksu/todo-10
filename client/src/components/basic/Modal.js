@@ -41,15 +41,11 @@ export default class Modal extends Element {
 
     document.body.appendChild(this.$el);
     this.addEventListener("modalclose", () => {
-      this.close();
+      this.removeSelf();
     });
 
     this.addEventListener("click", () => {
-      this.close();
+      this.removeSelf();
     });
-  }
-
-  close() {
-    document.body.removeChild(this.$el);
   }
 }
