@@ -12,5 +12,22 @@ services:
   app:
     build:
       context: ./server
-    #   dockerfile: ./docker/app/Dockerfile
     container_name: app
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - "./docker/mysql/:/docker-entrypoint-initdb.d/"
+    ports:
+      - 3306:3306
+    container_name: db
