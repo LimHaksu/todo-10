@@ -1,5 +1,7 @@
-.todo {
-  width: 70%;
+.todo,
+.ghost-todo,
+.todo-placeholder {
+  width: 250px;
   min-height: 100px;
   background: white;
   margin: 1rem;
@@ -7,7 +9,8 @@
   border-radius: 1rem;
 }
 
-.todo .todo-center {
+.todo .todo-center,
+.ghost-todo .todo-center {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
