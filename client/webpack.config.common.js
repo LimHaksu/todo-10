@@ -62,6 +62,5 @@ module.exports = {
     port: 5500,
     hot: true,
   },
-  devtool: "source-map",
   mode: "development",
 };
