@@ -2,6 +2,7 @@ import Element from "../basic/Element";
 import "./Todo.css";
 import Button from "../basic/Button";
 import ModalTodoEdit from "../ModalTodoEdit";
+import TodoDragController from "../TodoDrag";
 import LogEvent from "../../lib/LogEvent";
 import api from "../../lib/apiCallWrapper";
 import ModalConfirm from "../basic/ModalConfirm";
@@ -55,6 +56,17 @@ export default class Todo extends Element {
     this.appendChild(iconDiv);
     this.appendChild(centerDiv);
     this.appendChild(deleteDiv);
+    this.addEventListener("mousedown", (evt) => {
+      const getTodoDom = (dom) => {
+        if (dom.classList.contains("todo")) return dom;
+        else return getTodoDom(dom.parentNode);
+      };
+      const todoDom = getTodoDom(evt.target);
+      const { top, left, width, height } = todoDom.getBoundingClientRect();
+      const offsetX = evt.clientX - left;
+      const offsetY = evt.clientY - top;
+      new TodoDragController(todoDom, offsetX, offsetY);
+    });
   }
 
   changeContent(content) {}
