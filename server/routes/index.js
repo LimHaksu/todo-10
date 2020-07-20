@@ -9,7 +9,6 @@ router.get("/todos", todosApi);
 router.get("/columns", columnsApi);
 
 router.delete("/todo", (req, res) => {
-  console.log(req.query);
   const id = parseInt(req.query.todo_id);
   if (isNaN(id)) {
     res.status = 400;
@@ -21,6 +20,7 @@ router.delete("/todo", (req, res) => {
         todo_id: 1,
         todo_content: "test toto sontent",
         column_content: "column",
+        username: "crog",
       },
     });
   }
