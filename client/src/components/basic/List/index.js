@@ -25,6 +25,20 @@ export default class List extends Element {
     Element.prototype.appendChild.bind(this)(li);
   }
 
+  pushFront(key, element) {
+    if (!(typeof key === "string" || typeof key === "number")) {
+      throw new Error("Key should be a string or a number.");
+    }
+
+    if (this.$list[key]) {
+      throw new Error("Duplicated key: ", key);
+    }
+
+    const li = new Li(element);
+    this.$list[key] = li;
+    Element.prototype.insertAdjacentElement.bind(this)("afterbegin", li);
+  }
+
   remove(key) {
     if (this.$list[key]) {
       Element.prototype.removeChild.bind(this)(this.$list[key]);

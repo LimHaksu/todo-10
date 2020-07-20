@@ -48,5 +48,8 @@ export default class Main extends Element {
 
     const menu = new Menu();
     this.appendChild(menu);
+    this.addEventListener("log", (evt) => {
+      menu.log(evt.detail.type, evt.detail.data);
+    });
   }
 }
