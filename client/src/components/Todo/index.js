@@ -62,10 +62,10 @@ export default class Todo extends Element {
         else return getTodoDom(dom.parentNode);
       };
       const todoDom = getTodoDom(evt.target);
-      const { top, left, width, height } = todoDom.getBoundingClientRect();
+      const { top, left } = todoDom.getBoundingClientRect();
       const offsetX = evt.clientX - left;
       const offsetY = evt.clientY - top;
-      new TodoDragController(todoDom, offsetX, offsetY);
+      new TodoDrag(todoDom, offsetX, offsetY);
     });
   }
 
