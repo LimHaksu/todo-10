@@ -44,7 +44,7 @@ export default class Element {
   }
 
   insertAdjacentElement(...args) {
-    this.$el.insertAdjacentElement(...args);
+    this.$el.insertAdjacentElement(args[0], args[1].getDom());
     return this;
   }
 
