@@ -2,7 +2,7 @@ import Element from "../basic/Element";
 import "./Todo.css";
 import Button from "../basic/Button";
 import ModalTodoEdit from "../ModalTodoEdit";
-import TodoDragController from "../TodoDrag";
+import TodoDrag from "../TodoDrag";
 import LogEvent from "../../lib/LogEvent";
 import api from "../../lib/apiCallWrapper";
 import ModalConfirm from "../basic/ModalConfirm";

@@ -26,8 +26,8 @@ const getClosestYNextDom = (y, domArray) => {
   return cloesestDom;
 };
 
-const wrapperHandleMousemoveForPlaceHolder = (placeholder) => {
-  const handleMousemoveForPlaceHolder = (evt) => {
+const getHandleMousemoveForPlaceHolder = (placeholder) => {
+  return (evt) => {
     const els = document.elementsFromPoint(evt.clientX, evt.clientY);
     const col = els.filter((node) => node.classList.contains("column"))[0];
     if (!col) return;
@@ -48,18 +48,16 @@ const wrapperHandleMousemoveForPlaceHolder = (placeholder) => {
       );
     }
   };
-  return handleMousemoveForPlaceHolder;
 };
 
-const wrapperHandleMousemove = (dom, offsetX, offsetY) => {
-  const handleMousemove = (evt) => {
+const getHandleMousemove = (dom, offsetX, offsetY) => {
+  return (evt) => {
     setDomTopLeft(dom, evt.clientY - offsetY, evt.clientX - offsetX);
   };
-  return handleMousemove;
 };
 
-const wrapperHandleMouseUp = (ghostNode, placeholder, bodyEvents) => {
-  const handleMouseUp = (evt) => {
+const getHandleMouseUp = (ghostNode, placeholder, bodyEvents) => {
+  return (evt) => {
     ghostNode.classList.remove("ghost-todo");
     ghostNode.classList.add("todo");
 
@@ -71,7 +69,6 @@ const wrapperHandleMouseUp = (ghostNode, placeholder, bodyEvents) => {
       document.body.removeEventListener(evtname, fn);
     });
   };
-  return handleMouseUp;
 };
 
 export default class TodoDrag {
@@ -87,7 +84,7 @@ export default class TodoDrag {
     let bodyEvents = [];
     dom.parentNode.remove(); // remove li from column;
 
-    const handleMousemove = wrapperHandleMousemove(dom, offsetX, offsetY);
+    const handleMousemove = getHandleMousemove(dom, offsetX, offsetY);
     bodyEvents.push(["mousemove", handleMousemove]);
     document.body.addEventListener("mousemove", handleMousemove);
 
@@ -99,17 +96,13 @@ export default class TodoDrag {
 
     document.body.appendChild(ghostNode);
 
-    const handleMousemoveForPlaceHolder = wrapperHandleMousemoveForPlaceHolder(
+    const handleMousemoveForPlaceHolder = getHandleMousemoveForPlaceHolder(
       placeholder
     );
     bodyEvents.push(["mousemove", handleMousemoveForPlaceHolder]);
     document.body.addEventListener("mousemove", handleMousemoveForPlaceHolder);
 
-    const handleMouseUp = wrapperHandleMouseUp(
-      ghostNode,
-      placeholder,
-      bodyEvents
-    );
+    const handleMouseUp = getHandleMouseUp(ghostNode, placeholder, bodyEvents);
     bodyEvents.push(["mouseup", handleMouseUp]);
     document.body.addEventListener("mouseup", handleMouseUp);
   }
