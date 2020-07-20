@@ -5,7 +5,7 @@ const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: ["babel-polyfill", "./src/index.js"],
   output: {
     path: path.resolve(__dirname, "dist/static"),
     filename: "bundle.js",
@@ -61,6 +61,15 @@ module.exports = {
     compress: true,
     port: 5500,
     hot: true,
+    proxy: {
+      "/api": {
+        target: {
+          host: "localhost",
+          // protocol: config.dev.proxyProtocol, // 백엔드 프로토콜 'http'
+          port: 3000,
+        },
+      },
+    },
   },
   mode: "development",
 };

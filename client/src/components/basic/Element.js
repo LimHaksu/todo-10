@@ -43,6 +43,11 @@ export default class Element {
     return this;
   }
 
+  insertAdjacentElement(...args) {
+    this.$el.insertAdjacentElement(args[0], args[1].getDom());
+    return this;
+  }
+
   removeChild(el) {
     this.$el.removeChild(el.$el);
     return this;
