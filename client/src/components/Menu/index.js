@@ -25,7 +25,12 @@ export default class Menu extends Element {
         console.log("add", data);
         break;
       case "remove-todo":
-        console.log("remove", data);
+        this.$logs.pushFront(
+          data.logId,
+          new Log({
+            todoContent: `${data.username} removed ${data.todoContent} from ${data.columnContent}`,
+          })
+        );
         break;
       default:
         throw new Error("Invalid log type: ", type);
