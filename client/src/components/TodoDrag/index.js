@@ -1,4 +1,5 @@
 import { Element } from "../basic";
+import "./TodoDrag.css";
 
 class DragPlaceholder extends Element {
   constructor() {
@@ -34,16 +35,11 @@ export default class TodoDragController {
 
     ghostNode.classList.add("ghost-todo");
     ghostNode.classList.remove("todo");
-    ghostNode.style.position = `fixed`;
-    ghostNode.style.opacity = `0.5`;
     ghostNode.style.top = `${top}px`;
     ghostNode.style.left = `${left}px`;
-    ghostNode.style.zIndex = `9999`;
-    ghostNode.style.width = width + "px";
-    ghostNode.style.height = height + "px";
+    // ghostNode.style.width = width + "px";
+    // ghostNode.style.height = height + "px";
     document.body.appendChild(ghostNode);
-
-    const cols = document.querySelectorAll(".column");
 
     const handleMousemove1 = (evt) => {
       const els = document.elementsFromPoint(evt.clientX, evt.clientY);
@@ -78,8 +74,10 @@ export default class TodoDragController {
     document.body.addEventListener("mousemove", handleMousemove1);
 
     const handleMouseUP = (evt) => {
+      ghostNode.classList.remove("ghost-todo");
+      ghostNode.classList.add("todo");
+
       const li = document.createElement("li");
-      ghostNode.style.position = "static";
       li.appendChild(ghostNode);
       placeholder.getDom().parentNode.insertBefore(li, placeholder.getDom());
       placeholder.getDom().remove();
