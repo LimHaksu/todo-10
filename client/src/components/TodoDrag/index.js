@@ -1,16 +1,7 @@
 import { Element } from "../basic";
+import DragPlaceholder from "./DragPlaceholder";
 import "./TodoDrag.css";
 
-class DragPlaceholder extends Element {
-  constructor() {
-    super("li");
-    this.$placeholder = new Element("div", { class: "todo-placeholder" });
-    this.$placeholder.setText("place");
-    this.appendChild(this.$placeholder);
-  }
-}
-
-class DragGhost extends Element {}
 export default class TodoDragController {
   constructor(dom, offsetX, offsetY) {
     const { top, left } = dom.getBoundingClientRect();
