@@ -2,6 +2,7 @@ import Element from "../basic/Element";
 import "./Todo.css";
 import Button from "../basic/Button";
 import ModalTodoEdit from "../ModalTodoEdit";
+import LogEvent from "../../lib/LogEvent";
 
 export default class Todo extends Element {
   constructor({ id, content, username }) {
@@ -30,9 +31,17 @@ export default class Todo extends Element {
     deleteDiv.appendChild(
       new Button(
         "🗑️",
-        () => {
-          alert("delete todo " + id);
-        },
+        function () {
+          // TODO: API call
+
+          const logEvent = new LogEvent("remove-todo", {
+            todoId: id,
+            todoContent: content,
+            username,
+          });
+          this.getDom().dispatchEvent(logEvent);
+          this.removeSelf();
+        }.bind(this),
         { class: "reset-button-style" }
       )
     );
