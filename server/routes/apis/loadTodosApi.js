@@ -35,7 +35,7 @@ export default (req, res) => {
               resolve({
                 id: col.id,
                 idx: col.idx,
-                content: col.title,
+                content: col.content,
                 username: username,
                 created_at: col.created_at,
                 updated_at: col.updated_at,
