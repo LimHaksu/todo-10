@@ -31,27 +31,28 @@ export default class Todo extends Element {
     centerDiv.appendChild(authorDiv);
 
     const deleteDiv = new Element("div");
-    deleteDiv.appendChild(
-      new Button(
-        "🗑️",
-        async function () {
-          new ModalConfirm(async () => {
-            const res = await api.removeTodoApi(id);
-            const result = res.result;
-            const logEvent = new LogEvent("remove-todo", {
-              logId: result.log_id,
-              todoId: result.todo_id,
-              todoContent: result.todo_content,
-              columnContent: result.column_content,
-              username: result.username,
-            });
-            this.getDom().dispatchEvent(logEvent);
-            this.removeSelf();
+    const deleteButton = new Button(
+      "🗑️",
+      async function () {
+        new ModalConfirm(async () => {
+          const result = await api.removeTodoApi(id);
+          const logEvent = new LogEvent("remove-todo", {
+            logId: result.log_id,
+            todoId: result.todo_id,
+            todoContent: result.todo_content,
+            columnContent: result.column_content,
+            username: result.username,
           });
-        }.bind(this),
-        { class: "reset-button-style" }
-      )
+          this.getDom().dispatchEvent(logEvent);
+          this.removeSelf();
+        });
+      }.bind(this),
+      { class: "reset-button-style" }
     );
+    deleteButton.addEventListener("mousedown", (evt) => {
+      evt.stopPropagation();
+    });
+    deleteDiv.appendChild(deleteButton);
 
     this.appendChild(iconDiv);
     this.appendChild(centerDiv);

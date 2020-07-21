@@ -36,7 +36,7 @@ const fetchWrapper = (url, method, data) => {
       throw new Error("Unsupported method: ", method);
   }
   return fetch(url, fetchData).then((res) => {
-    if (res.ok) return res.json();
+    if (res.ok) return res.json().then((json) => json.result);
     else {
       throw new Error(res.error);
     }
