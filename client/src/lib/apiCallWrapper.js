@@ -5,7 +5,7 @@
  * @param {*} data
  * @param {Object} data.query
  */
-const fetchWrapper = (url, method, data) => {
+const fetchWrapper = (url, method, data = {}) => {
   const fetchData = { method };
   switch (method.toLowerCase()) {
     case "get":
@@ -44,7 +44,11 @@ const fetchWrapper = (url, method, data) => {
 };
 
 function removeTodoApi(todo_id) {
-  return fetchWrapper("/api/todo", "delete", { query: { todo_id } });
+  return fetchWrapper("/api/todo", "DELETE", { query: { todo_id } });
 }
 
-export default { removeTodoApi };
+function loadTodoApi() {
+  return fetchWrapper("/api/todos", "GET", {});
+}
+
+export default { removeTodoApi, loadTodoApi };
