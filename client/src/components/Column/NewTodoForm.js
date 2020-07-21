@@ -1,4 +1,5 @@
 import { Element, Textarea, Button } from "../basic";
+import "../global.scss";
 
 const handleAddButtonClick = (event) => {
   event.preventDefault();
@@ -9,7 +10,7 @@ const handleCancelButtonClick = (event) => {
 
 export default class NewTodoForm extends Element {
   constructor() {
-    super("form", { class: "form" });
+    super("form", { class: ["form", "display-none"] });
 
     this.$textarea = new Textarea({
       name: "todo-content",

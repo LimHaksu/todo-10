@@ -42,11 +42,18 @@ export default class Column extends Element {
     this.$newBtn = new Button(
       "+",
       (evt) => {
-        alert("+ button clicked");
+        if (this.isNewBtnHidden) {
+          this.isNewBtnHidden = false;
+          this.$newTodoForm.getDom().classList.remove("display-none");
+        } else {
+          this.isNewBtnHidden = true;
+          this.$newTodoForm.getDom().classList.add("display-none");
+        }
       },
       { class: ["reset-button-style"] }
     );
     headerRight.appendChild(this.$newBtn);
+    this.isNewBtnHidden = true;
     this.$dotBtn = new Button(
       "...",
       (evt) => {
