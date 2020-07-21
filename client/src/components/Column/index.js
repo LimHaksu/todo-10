@@ -1,10 +1,12 @@
 import { List, Element, H, Todo, Button } from "../basic";
 import ModalColumnTitleEdit from "../ModalColumnTitleEdit";
 import NewTodoForm from "./NewTodoForm";
+import apiCallWrapper from "../../lib/apiCallWrapper";
 import "./Column.scss";
 
-const onTitleEdit = (id, content) => {
-  alert("제목 수정 버튼 클릭");
+const onTitleEdit = async (id, content) => {
+  const response = await apiCallWrapper.modifyColumnApi(id, content);
+  console.log("response", response);
 };
 
 const handleColumnTitleDoubleClick = (event, columnTitle) => {
