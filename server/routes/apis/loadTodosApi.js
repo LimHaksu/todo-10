@@ -4,7 +4,7 @@ export default (req, res) => {
   result.push({
     id: 1,
     idx: 1,
-    title: "Todos",
+    content: "Todos",
     username,
     prev_column_id: 0,
     todo_list: [
@@ -42,7 +42,7 @@ export default (req, res) => {
   result.push({
     id: 2,
     idx: 2,
-    title: "Doing",
+    content: "Doing",
     username,
     prev_column_id: 1,
     todo_list: [
@@ -70,6 +70,15 @@ export default (req, res) => {
         column_id: 2,
         prev_todo_id: null,
         content: "todo32",
+        created_at: "now",
+        updated_at: "tom",
+      },
+      {
+        id: 7,
+        username,
+        column_id: 2,
+        prev_todo_id: null,
+        content: "todo37",
         created_at: "now",
         updated_at: "tom",
       },
