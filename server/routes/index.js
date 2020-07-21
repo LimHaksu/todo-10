@@ -6,7 +6,6 @@ const router = Router();
 
 /* GET home page. */
 router.get("/todos", todosApi);
-router.get("/columns", columnsApi);
 
 router.delete("/todo", (req, res) => {
   const id = parseInt(req.query.todo_id);
