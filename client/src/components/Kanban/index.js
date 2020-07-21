@@ -24,7 +24,7 @@ export default class Kanban extends List {
             username: todoData.username,
           }),
         ]);
-        const column = new Column(colData.content, todos);
+        const column = new Column(colData.id, colData.content, todos);
         this.push(colData.id, column);
       });
     });
