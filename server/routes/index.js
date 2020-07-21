@@ -7,7 +7,6 @@ const router = Router();
 
 /* GET home page. */
 router.get("/todos", todosApi);
-router.get("/columns", columnsApi);
 router.post("/todo", addTodoApi);
 
 router.delete("/todo", (req, res) => {
