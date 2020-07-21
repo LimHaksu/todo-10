@@ -20,6 +20,8 @@ const fetchWrapper = (url, method, data) => {
       break;
     case "post":
     case "put":
+    case "post":
+    case "patch":
       if (data.body) {
         if (typeof data.body === "object") {
           fetchData.body = JSON.stringify(data.body);
