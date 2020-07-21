@@ -10,7 +10,6 @@ CREATE TABLE todo_column(
     idx INT NOT NULL,
     title VARCHAR(100) NOT NULL,
     user_id INT NOT NULL,
-    prev_column_id INT,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),	
 
@@ -19,9 +18,9 @@ CREATE TABLE todo_column(
 );
 CREATE TABLE todo(
 	id INT NOT NULL AUTO_INCREMENT,
+    idx INT NOT NULL,
 	user_id INT NOT NULL,
 	column_id INT NOT NULL,
-	prev_todo_id INT,
 	content VARCHAR(1000) NOT NULL,
 	created_at TIMESTAMP DEFAULT NOW(),
 	updated_at TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
@@ -33,10 +32,7 @@ CREATE TABLE log(
     id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
     action_type VARCHAR(6) NOT NULL,
-    todo_id INT,
-    todo_content VARCHAR(1000),
-    column_content VARCHAR(100),
-    prev_column_content VARCHAR(100),
+    data TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
 
     CONSTRAINT log_pk PRIMARY KEY (id),
