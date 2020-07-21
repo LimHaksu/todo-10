@@ -7,7 +7,7 @@ const modifyColumnContent = (req, res) => {
   const columnId = req.body.column_id;
   const nextColumnContent = req.body.next_column_content;
   useDbConnection(async (con) => {
-    const [selectResult] = await con.query(selectQuery, [columnId]);
+    const [[selectResult]] = await con.query(selectQuery, [columnId]);
     const prevColumnContent = selectResult.content;
 
     const [updateResult] = await con.query(updateQuery, [
