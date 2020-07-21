@@ -3,19 +3,19 @@ import useDbConnection from "../../lib/useDbConnection";
 const selectQuery = `select content from todo_column where id=?`;
 const updateQuery = `update todo_column set content=? where id=?`;
 
-const isValid = (columnId, nextColumnContent) => {
+const isValidAll = (columnId, nextColumnContent) => {
   return (
     columnId &&
     typeof columnId === "number" &&
-    content &&
-    typeof content === string &&
-    content.length > 0
+    nextColumnContent &&
+    typeof nextColumnContent === string &&
+    nextColumnContent.length > 0
   );
 };
 
 const modifyColumnContent = (req, res) => {
   const { columnId, nextColumnContent } = req.body;
-  if (isValid(columnId, nextColumnContent)) {
+  if (isValidAll(columnId, nextColumnContent)) {
     useDbConnection(async (con) => {
       const [[selectResult]] = await con.query(selectQuery, [columnId]);
       const prevColumnContent = selectResult.content;
