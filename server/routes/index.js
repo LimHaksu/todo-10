@@ -27,4 +27,7 @@ router.delete("/todo", (req, res) => {
     });
   }
 });
+
+router.patch("/todo_column", columnsApi.modifyColumnContent);
+
 module.exports = router;

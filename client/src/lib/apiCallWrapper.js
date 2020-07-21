@@ -52,4 +52,15 @@ function loadTodoApi() {
   return fetchWrapper("/api/todos", "GET", {});
 }
 
-export default { removeTodoApi, loadTodoApi };
+/**
+ *
+ * @param {integer} column_id
+ * @param {string} next_column_content
+ */
+function modifyColumnApi(column_id, next_column_content) {
+  return fetchWrapper("/api/todo_column", "patch", {
+    body: { column_id, next_column_content },
+  });
+}
+
+export default { removeTodoApi, loadTodoApi, modifyColumnApi };
