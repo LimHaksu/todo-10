@@ -1,90 +1,52 @@
+import useDbConnection from "../../lib/useDbConnection";
+
+const loadColumnSql = `
+SELECT * FROM todo_column ORDER BY idx
+`;
+
+const loadTodosSql = `
+SELECT * 
+FROM todo 
+WHERE column_id=?
+ORDER BY idx
+`;
+
+const username = "circle";
+async function loadTodos(conn, columnId) {
+  const [rows] = await conn.query(loadTodosSql, [columnId]);
+  return rows.map((row) => ({
+    id: row.id,
+    content: row.content,
+    username: username,
+    column_id: row.column_id,
+    created_at: row.created_at,
+    updated_at: row.updated_at,
+  }));
+}
+
 export default (req, res) => {
-  const username = "circle";
-  let result = [];
-  result.push({
-    id: 1,
-    idx: 1,
-    content: "Todos",
-    username,
-    prev_column_id: 0,
-    todo_list: [
-      {
-        id: 1,
-        username,
-        column_id: 1,
-        prev_todo_id: null,
-        content: "todo1",
-        created_at: "now",
-        updated_at: "tom",
-      },
-      {
-        id: 2,
-        username,
-        column_id: 1,
-        prev_todo_id: null,
-        content: "todo2",
-        created_at: "now",
-        updated_at: "tom",
-      },
-      {
-        id: 3,
-        username,
-        column_id: 1,
-        prev_todo_id: null,
-        content: "todo3",
-        created_at: "now",
-        updated_at: "tom",
-      },
-    ],
-    created_at: "now",
-    updated_at: "tow",
+  useDbConnection(async (conn) => {
+    const [cols] = await conn.query(loadColumnSql);
+    const result = await Promise.all(
+      cols.map(
+        (col) =>
+          new Promise(async (resolve, reject) => {
+            try {
+              resolve({
+                id: col.id,
+                idx: col.idx,
+                content: col.title,
+                username: username,
+                created_at: col.created_at,
+                updated_at: col.updated_at,
+                todo_list: await loadTodos(conn, col.id),
+              });
+            } catch (e) {
+              reject(e);
+            }
+          })
+      )
+    );
+    res.json({ result });
   });
-  result.push({
-    id: 2,
-    idx: 2,
-    content: "Doing",
-    username,
-    prev_column_id: 1,
-    todo_list: [
-      {
-        id: 4,
-        username,
-        column_id: 2,
-        prev_todo_id: null,
-        content: "todo11",
-        created_at: "now",
-        updated_at: "tom",
-      },
-      {
-        id: 5,
-        username,
-        column_id: 2,
-        prev_todo_id: null,
-        content: "todo21",
-        created_at: "now",
-        updated_at: "tom",
-      },
-      {
-        id: 6,
-        username,
-        column_id: 2,
-        prev_todo_id: null,
-        content: "todo32",
-        created_at: "now",
-        updated_at: "tom",
-      },
-      {
-        id: 7,
-        username,
-        column_id: 2,
-        prev_todo_id: null,
-        content: "todo37",
-        created_at: "now",
-        updated_at: "tom",
-      },
-    ],
-    created_at: "now",
-    updated_at: "tow",
-  });
-  res.json({ result });
 };
