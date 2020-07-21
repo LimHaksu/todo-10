@@ -13,7 +13,6 @@ const queries = [
     idx int not null,
     title varchar(100) not null,
     user_id int not null,
-    prev_column_id int,
     created_at timestamp default now(),
     updated_at timestamp default now() on update now(),	
 
@@ -22,9 +21,9 @@ const queries = [
 );`,
   `create table todo(
 	id int not null AUTO_INCREMENT,
+  idx int not null,
 	user_id int not null,
 	column_id int not null,
-	prev_todo_id int,
 	content varchar(1000) not null,
 	created_at timestamp default now(),
 	updated_at timestamp default now() on update now(),
@@ -36,10 +35,7 @@ const queries = [
     id int not null AUTO_INCREMENT,
     user_id int not null,
     action_type varchar(6) not null,
-    todo_id int,
-    todo_content varchar(1000),
-    column_content varchar(100),
-    prev_column_content varchar(100),
+    data text not null,
     created_at timestamp default now(),
 
     constraint log_pk primary key (id),

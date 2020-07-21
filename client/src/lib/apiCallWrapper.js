@@ -5,11 +5,12 @@
  * @param {*} data
  * @param {Object} data.query
  */
-const fetchWrapper = (url, method, data) => {
+const fetchWrapper = (url, method, data = {}) => {
+  method = method.toUpperCase();
   const fetchData = { method };
-  switch (method.toLowerCase()) {
-    case "get":
-    case "delete":
+  switch (method) {
+    case "GET":
+    case "DELETE":
       if (data.query) {
         let q = "?";
         for (let key in data.query) {
@@ -18,9 +19,9 @@ const fetchWrapper = (url, method, data) => {
         url += q;
       }
       break;
-    case "put":
-    case "post":
-    case "patch":
+    case "PUT":
+    case "POST":
+    case "PATCH":
       if (data.body) {
         if (typeof data.body === "object") {
           fetchData.body = JSON.stringify(data.body);
@@ -44,7 +45,11 @@ const fetchWrapper = (url, method, data) => {
 };
 
 function removeTodoApi(todo_id) {
-  return fetchWrapper("/api/todo", "delete", { query: { todo_id } });
+  return fetchWrapper("/api/todo", "DELETE", { query: { todo_id } });
 }
 
-export default { removeTodoApi };
+function loadTodoApi() {
+  return fetchWrapper("/api/todos", "GET", {});
+}
+
+export default { removeTodoApi, loadTodoApi };
