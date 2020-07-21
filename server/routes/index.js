@@ -7,7 +7,6 @@ const router = Router();
 
 /* GET home page. */
 router.get("/todos", todosApi);
-router.get("/columns", columnsApi);
 router.post("/todo", addTodoApi);
 
 router.delete("/todo", (req, res) => {
@@ -30,4 +29,7 @@ router.delete("/todo", (req, res) => {
     });
   }
 });
+
+router.patch("/todo_column", columnsApi.modifyColumnContent);
+
 module.exports = router;

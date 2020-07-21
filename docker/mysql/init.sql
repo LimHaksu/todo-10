@@ -10,7 +10,7 @@ INSERT INTO user (id, password, username) VALUES(1, 1234, "Abel");
 CREATE TABLE todo_column(
     id INT NOT NULL AUTO_INCREMENT,
     idx INT NOT NULL,
-    title VARCHAR(100) NOT NULL,
+    content VARCHAR(100) NOT NULL,
     user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),	

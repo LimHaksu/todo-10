@@ -28,7 +28,7 @@ const queries = [
   `INSERT INTO user (id, password, username) VALUES(1, "1234", "admin")`,
   ...columns.map(
     (col) =>
-      `INSERT INTO todo_column (id, idx, title, user_id, prev_column_id) VALUES (${col
+      `INSERT INTO todo_column (id, idx, content, user_id, prev_column_id) VALUES (${col
         .map((a) => {
           if (typeof a === "string") return `"${a}"`;
           else return "" + a;

@@ -1,24 +1,26 @@
 import { List, Element, H, Todo, Button } from "../basic";
 import ModalColumnTitleEdit from "../ModalColumnTitleEdit";
 import NewTodoForm from "./NewTodoForm";
+import apiCallWrapper from "../../lib/apiCallWrapper";
 import "./Column.scss";
 
-const onTitleEdit = (id, content) => {
-  alert("제목 수정 버튼 클릭");
+const onTitleEdit = async (id, content) => {
+  const response = await apiCallWrapper.modifyColumnApi(id, content);
+  console.log("response", response);
 };
 
-const handleColumnTitleDoubleClick = (event, columnTitle) => {
+const handleColumnTitleDoubleClick = (event, id, columnTitle) => {
   event.preventDefault();
-  new ModalColumnTitleEdit({ id: 1, columnTitle, onEdit: onTitleEdit });
+  new ModalColumnTitleEdit({ id, columnTitle, onEdit: onTitleEdit });
 };
 
 export default class Column extends Element {
   /**
    *
-   * @param {string} title
+   * @param {string} content
    * @param {Todo[]} todos
    */
-  constructor(title, todos = []) {
+  constructor(id, title, todos = []) {
     super("div", { class: "column" });
     const header = new Element("div", { class: "column-header" });
 
@@ -31,7 +33,7 @@ export default class Column extends Element {
 
     this.$title = new H(2, title, {
       ondblclick: (event) => {
-        handleColumnTitleDoubleClick(event, title);
+        handleColumnTitleDoubleClick(event, id, title);
       },
     });
     headerLeft.appendChild(this.$title);

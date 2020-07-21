@@ -11,7 +11,7 @@ const queries = [
   `create table todo_column(
     id int not null AUTO_INCREMENT,
     idx int not null,
-    title varchar(100) not null,
+    content varchar(100) not null,
     user_id int not null,
     created_at timestamp default now(),
     updated_at timestamp default now() on update now(),	
