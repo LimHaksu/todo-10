@@ -1,8 +1,77 @@
-import { Element } from "../basic";
 import DragPlaceholder from "./DragPlaceholder";
 import "./TodoDrag.css";
 
-export default class TodoDragController {
+const setDomTopLeft = (dom, top, left) => {
+  dom.style.top = `${top}px`;
+  dom.style.left = `${left}px`;
+};
+
+/**
+ * y 좌표 위 todo 중 y 좌표와 가장 가까운 todo의 dom 반환.
+ * @param {number} y
+ * @param {HTMLElement[]} domArray
+ * @returns null | HTMLElement
+ */
+const getClosestYNextDom = (y, domArray) => {
+  let cloesestDom = null;
+  domArray.some((dom) => {
+    const rectOfDom = dom.getBoundingClientRect();
+    const middleOfDom = (rectOfDom.top + rectOfDom.bottom) / 2;
+    if (middleOfDom < y) {
+      cloesestDom = dom;
+    } else {
+      return true; // some에서 return true는 break 처럼 동작
+    }
+  });
+  return cloesestDom;
+};
+
+const getHandleMousemoveForPlaceHolder = (placeholder) => {
+  return (evt) => {
+    const els = document.elementsFromPoint(evt.clientX, evt.clientY);
+    const col = els.filter((node) => node.classList.contains("column"))[0];
+    if (!col) return;
+
+    const closestBeforeTodoLi = getClosestYNextDom(
+      evt.clientY,
+      Array.from(col.querySelectorAll("li"))
+    );
+
+    if (!closestBeforeTodoLi) {
+      col
+        .querySelector("ol")
+        .insertAdjacentElement("afterbegin", placeholder.getDom());
+    } else {
+      closestBeforeTodoLi.insertAdjacentElement(
+        "afterend",
+        placeholder.getDom()
+      );
+    }
+  };
+};
+
+const getHandleMousemove = (dom, offsetX, offsetY) => {
+  return (evt) => {
+    setDomTopLeft(dom, evt.clientY - offsetY, evt.clientX - offsetX);
+  };
+};
+
+const getHandleMouseUp = (ghostNode, placeholder, bodyEvents) => {
+  return (evt) => {
+    ghostNode.classList.remove("ghost-todo");
+    ghostNode.classList.add("todo");
+
+    const li = document.createElement("li");
+    li.appendChild(ghostNode);
+    placeholder.getDom().parentNode.insertBefore(li, placeholder.getDom());
+    placeholder.getDom().remove();
+    bodyEvents.forEach(([evtname, fn]) => {
+      document.body.removeEventListener(evtname, fn);
+    });
+  };
+};
+
+export default class TodoDrag {
   constructor(dom, offsetX, offsetY) {
     const { top, left } = dom.getBoundingClientRect();
 
@@ -14,10 +83,8 @@ export default class TodoDragController {
 
     let bodyEvents = [];
     dom.parentNode.remove(); // remove li from column;
-    const handleMousemove = (evt) => {
-      dom.style.top = `${evt.clientY - offsetY}px`;
-      dom.style.left = `${evt.clientX - offsetX}px`;
-    };
+
+    const handleMousemove = getHandleMousemove(dom, offsetX, offsetY);
     bodyEvents.push(["mousemove", handleMousemove]);
     document.body.addEventListener("mousemove", handleMousemove);
 
@@ -25,68 +92,18 @@ export default class TodoDragController {
 
     ghostNode.classList.add("ghost-todo");
     ghostNode.classList.remove("todo");
-    ghostNode.style.top = `${top}px`;
-    ghostNode.style.left = `${left}px`;
+    setDomTopLeft(ghostNode, top, left);
+
     document.body.appendChild(ghostNode);
 
-    const handleMousemove1 = (evt) => {
-      const els = document.elementsFromPoint(evt.clientX, evt.clientY);
-      const col = els.filter((node) => node.classList.contains("column"))[0];
-      if (!col) return;
+    const handleMousemoveForPlaceHolder = getHandleMousemoveForPlaceHolder(
+      placeholder
+    );
+    bodyEvents.push(["mousemove", handleMousemoveForPlaceHolder]);
+    document.body.addEventListener("mousemove", handleMousemoveForPlaceHolder);
 
-      // 가장 가까운 todo의 다음 dom 반환. insertBefore을 사용하기 위해.
-      /**
-       *
-       * @param {number} y
-       * @param {HTMLElement[]} domArray
-       * @returns null | HTMLElement
-       */
-      const getClosestYNextDom = (y, domArray) => {
-        let cloesestDom = null;
-        domArray.some((dom) => {
-          const rectOfDom = dom.getBoundingClientRect();
-          const middleOfDom = (rectOfDom.top + rectOfDom.bottom) / 2;
-          if (middleOfDom < y) {
-            cloesestDom = dom;
-          } else {
-            return true; // some에서 return true는 break 처럼 동작
-          }
-        });
-        return cloesestDom;
-      };
-
-      const closestBeforeTodoLi = getClosestYNextDom(
-        evt.clientY,
-        Array.from(col.querySelectorAll("li"))
-      );
-
-      if (!closestBeforeTodoLi) {
-        col
-          .querySelector("ol")
-          .insertAdjacentElement("afterbegin", placeholder.getDom());
-      } else {
-        closestBeforeTodoLi.insertAdjacentElement(
-          "afterend",
-          placeholder.getDom()
-        );
-      }
-    };
-    bodyEvents.push(["mousemove", handleMousemove1]);
-    document.body.addEventListener("mousemove", handleMousemove1);
-
-    const handleMouseUP = (evt) => {
-      ghostNode.classList.remove("ghost-todo");
-      ghostNode.classList.add("todo");
-
-      const li = document.createElement("li");
-      li.appendChild(ghostNode);
-      placeholder.getDom().parentNode.insertBefore(li, placeholder.getDom());
-      placeholder.getDom().remove();
-      bodyEvents.forEach(([evtname, fn]) => {
-        document.body.removeEventListener(evtname, fn);
-      });
-    };
-    bodyEvents.push(["mouseup", handleMouseUP]);
-    document.body.addEventListener("mouseup", handleMouseUP);
+    const handleMouseUp = getHandleMouseUp(ghostNode, placeholder, bodyEvents);
+    bodyEvents.push(["mouseup", handleMouseUp]);
+    document.body.addEventListener("mouseup", handleMouseUp);
   }
 }

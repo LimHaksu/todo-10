@@ -9,6 +9,10 @@
   border-radius: 1rem;
 }
 
+.ghost-todo {
+  margin: 0;
+}
+
 .todo .todo-center,
 .ghost-todo .todo-center {
   display: flex;
