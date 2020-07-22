@@ -32,8 +32,7 @@ export default (req, res) => {
       }
       let [rows] = await conn.query(selectColumnByIdSql, [column_id]);
       if (rows.length == 0) throw new Error("Column isn't exist.");
-      const column_content = rows[0].title;
-
+      const column_content = rows[0].content;
       await conn.query(updateTodoIdxSql, [column_id]);
       [rows] = await conn.query(addTodoSql, [user_id, column_id, content]);
       // TODO: save log

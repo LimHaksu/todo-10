@@ -1,13 +1,15 @@
 import { Element, Textarea, Button } from "../basic";
 import apiCallWrapper from "../../lib/apiCallWrapper";
 import Todo from "../Todo";
+import LogEvent from "../../lib/LogEvent";
 import "../global.scss";
 
 const handleAddButtonClick = async (
   columnId,
   todoContent,
   addTodo,
-  clearTextInTextarea
+  clearTextInTextarea,
+  emitLogEvent
 ) => {
   const result = await apiCallWrapper.addTodoApi(columnId, todoContent);
   if (result) {
@@ -17,6 +19,16 @@ const handleAddButtonClick = async (
       username: result.username,
     });
     addTodo(result.todo_id, todo);
+
+    const logEvent = new LogEvent("todo_add", {
+      logId: result.log_id,
+      todoId: result.todo_id,
+      todoContent: result.todo_content,
+      columnContent: result.column_content,
+      username: result.username,
+    });
+    emitLogEvent(logEvent);
+
     clearTextInTextarea();
   }
 };
@@ -53,7 +65,8 @@ export default class NewTodoForm extends Element {
           columnId,
           todoContent,
           addTodo,
-          this.clearTextInTextarea.bind(this)
+          this.clearTextInTextarea.bind(this),
+          this.emitLogEvent.bind(this)
         );
       },
       {
@@ -102,5 +115,9 @@ export default class NewTodoForm extends Element {
     } else {
       this.getDom().classList.remove("display-none");
     }
+  }
+
+  emitLogEvent(logEvent) {
+    this.getDom().dispatchEvent(logEvent);
   }
 }
