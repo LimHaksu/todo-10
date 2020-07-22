@@ -5,7 +5,7 @@ import api from "../../lib/apiCallWrapper";
 
 export default class Menu extends Element {
   constructor() {
-    super("div", { class: "menu" });
+    super("div", { class: ["menu", "display-none"] });
     const title = new Element("div", { class: "menu-title", text: "☰ Menu" });
     this.appendChild(title);
     const activityTitle = new Element("div", {
@@ -23,6 +23,13 @@ export default class Menu extends Element {
     });
   }
 
+  setDisplay(flag) {
+    if (flag) {
+      this.getDom().classList.remove("display-none");
+    } else {
+      this.getDom().classList.add("display-none");
+    }
+  }
   log(type, data) {
     switch (type) {
       case "todo_add":
