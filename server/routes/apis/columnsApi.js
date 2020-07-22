@@ -4,7 +4,7 @@ import getUserById from "../../lib/getUserById";
 const selectQuery = `select content from todo_column where id=?`;
 const updateQuery = `update todo_column set content=? where id=?`;
 
-const isValid = (columnId, nextColumnContent) =>
+const isValidAll = (columnId, nextColumnContent) =>
   columnId &&
   typeof columnId === "number" &&
   nextColumnContent &&
@@ -18,7 +18,7 @@ const modifyColumnContent = (req, res) => {
   //TODO remove hardcoded user id
   const userId = 1;
 
-  if (isValid(columnId, nextColumnContent)) {
+  if (isValidAll(columnId, nextColumnContent)) {
     useDbConnection(async (con) => {
       const user = await getUserById(con, userId);
       if (!user) {
