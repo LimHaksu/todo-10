@@ -1,8 +1,6 @@
 import Element from "./basic/Element";
 import Header from "./Header";
 import Kanban from "./Kanban";
-import Column from "./Column";
-import Todo from "./Todo";
 import Menu from "./Menu";
 import Button from "./basic/Button";
 import ModalTodoEdit from "./ModalTodoEdit";
@@ -39,7 +37,7 @@ export default class Main extends Element {
       menu.log(evt.detail.type, evt.detail.data);
     });
     this.addEventListener("show-menu", (evt) => {
-      menu.setDisplay(true);
+      menu.setHidden(false);
     });
   }
 }

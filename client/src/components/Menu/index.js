@@ -1,15 +1,29 @@
-import { Element, List } from "../basic";
+import { Element, List, Button } from "../basic";
 import Log from "../Log";
 import "./Menu.css";
 import api from "../../lib/apiCallWrapper";
 
 export default class Menu extends Element {
   constructor() {
-    super("div", { class: ["menu", "display-none"] });
-    const title = new Element("div", { class: "menu-title", text: "☰ Menu" });
+    super("div", { class: ["menu", "menu-hidden"] });
+    const title = new Element("div", {
+      class: ["menu-title", "flex-spacebetween"],
+      text: "☰ Menu",
+    });
+    const closeButton = new Button(
+      "❌",
+      (evt) => {
+        evt.preventDefault();
+        this.setHidden(true);
+      },
+      {
+        class: "close-button",
+      }
+    );
+    title.appendChild(closeButton);
     this.appendChild(title);
     const activityTitle = new Element("div", {
-      class: "menu-title",
+      class: "menu-activity",
       text: "🔔 Activity",
     });
     this.appendChild(activityTitle);
@@ -22,11 +36,11 @@ export default class Menu extends Element {
     });
   }
 
-  setDisplay(flag) {
+  setHidden(flag) {
     if (flag) {
-      this.getDom().classList.remove("display-none");
+      this.getDom().classList.add("menu-hidden");
     } else {
-      this.getDom().classList.add("display-none");
+      this.getDom().classList.remove("menu-hidden");
     }
   }
   log(type, data) {
