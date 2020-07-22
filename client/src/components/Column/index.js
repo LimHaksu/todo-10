@@ -3,16 +3,7 @@ import ModalColumnTitleEdit from "../ModalColumnTitleEdit";
 import NewTodoForm from "./NewTodoForm";
 import apiCallWrapper from "../../lib/apiCallWrapper";
 import "./Column.scss";
-
-const onTitleEdit = async (id, content) => {
-  const response = await apiCallWrapper.modifyColumnApi(id, content);
-  console.log("response", response);
-};
-
-const handleColumnTitleDoubleClick = (event, id, columnTitle) => {
-  event.preventDefault();
-  new ModalColumnTitleEdit({ id, columnTitle, onEdit: onTitleEdit });
-};
+import LogEvent from "../../lib/LogEvent";
 
 export default class Column extends Element {
   /**
@@ -32,8 +23,22 @@ export default class Column extends Element {
     headerLeft.appendChild(this.$count);
 
     this.$title = new H(2, title, {
-      ondblclick: (event) => {
-        handleColumnTitleDoubleClick(event, id, title);
+      ondblclick: () => {
+        const onTitleEdit = async (content) => {
+          const response = await apiCallWrapper.modifyColumnApi(id, content);
+          this.setTitle(response.next_column_content);
+
+          // Create log event
+          const logEvent = new LogEvent("edit-column-title", {
+            logId: response.log_id,
+            prevColumnContent: response.prev_column_content,
+            nextColumnContent: response.next_column_content,
+            username: response.username,
+          });
+          this.getDom().dispatchEvent(logEvent);
+        };
+
+        new ModalColumnTitleEdit({ columnTitle: title, onEdit: onTitleEdit });
       },
     });
     headerLeft.appendChild(this.$title);
