@@ -39,7 +39,6 @@ export default class Menu extends Element {
             todoContent: `${data.username} changed column ${data.prevColumnContent} to ${data.nextColumnContent}`,
           })
         );
-        console.log("edit column", data);
         break;
       default:
         throw new Error("Invalid log type: ", type);
