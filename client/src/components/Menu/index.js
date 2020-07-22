@@ -16,7 +16,6 @@ export default class Menu extends Element {
     this.$logs = new List(true);
     this.appendChild(this.$logs);
     api.loadLogsApi().then((res) => {
-      console.log(res);
       res.forEach(({ action_type, data }) => {
         this.log(action_type, data);
       });
