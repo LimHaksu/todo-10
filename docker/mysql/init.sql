@@ -18,9 +18,9 @@ CREATE TABLE todo_column(
     CONSTRAINT column_pk PRIMARY KEY (id),
     CONSTRAINT column_fk FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-INSERT INTO todo_column (idx, title, user_id) VALUES (1, "Todo", 1);
-INSERT INTO todo_column (idx, title, user_id) VALUES (2, "Doing", 1);
-INSERT INTO todo_column (idx, title, user_id) VALUES (3, "Done", 1);
+INSERT INTO todo_column (idx, content, user_id) VALUES (1, "Todo", 1);
+INSERT INTO todo_column (idx, content, user_id) VALUES (2, "Doing", 1);
+INSERT INTO todo_column (idx, content, user_id) VALUES (3, "Done", 1);
 
 CREATE TABLE todo(
 	id INT NOT NULL AUTO_INCREMENT,
