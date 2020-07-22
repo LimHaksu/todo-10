@@ -36,7 +36,7 @@ export default class Todo extends Element {
       async function () {
         new ModalConfirm(async () => {
           const result = await api.removeTodoApi(id);
-          const logEvent = new LogEvent("remove-todo", {
+          const logEvent = new LogEvent("todo_remove", {
             logId: result.log_id,
             todoId: result.todo_id,
             todoContent: result.todo_content,
