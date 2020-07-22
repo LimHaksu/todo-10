@@ -1,5 +1,7 @@
 import useDbConnection from "../../lib/useDbConnection";
 
+const selectColumnByIdSql = `select id, content from todo_column where id=?`;
+
 const updateTodoIdxSql = `
 update todo set idx=idx+1 where column_id=?;
 `;
@@ -18,11 +20,7 @@ export default (req, res) => {
     res.json({ error: "Invalid values" });
   } else {
     useDbConnection(async (conn) => {
-      let [
-        rows,
-      ] = await conn.query("select id, content from todo_column where id=?", [
-        column_id,
-      ]);
+      let [rows] = await conn.query(selectColumnByIdSql, [column_id]);
       if (rows.length == 0) throw new Error("Column isn't exist.");
       const column_content = rows[0].title;
 
