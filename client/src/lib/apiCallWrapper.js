@@ -58,6 +58,10 @@ function loadTodoApi() {
   return fetchWrapper("/api/todos", "GET", {});
 }
 
+function loadLogsApi() {
+  return fetchWrapper("/api/logs", "GET", {});
+}
+
 /**
  *
  * @param {integer} column_id
@@ -69,4 +73,10 @@ function modifyColumnApi(column_id, next_column_content) {
   });
 }
 
-export default { addTodoApi, removeTodoApi, loadTodoApi, modifyColumnApi };
+export default {
+  addTodoApi,
+  removeTodoApi,
+  loadTodoApi,
+  modifyColumnApi,
+  loadLogsApi,
+};
