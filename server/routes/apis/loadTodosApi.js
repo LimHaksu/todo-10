@@ -8,7 +8,7 @@ const loadTodosSql = `
 SELECT * 
 FROM todo 
 WHERE column_id=?
-ORDER BY idx
+ORDER BY idx DESC
 `;
 
 const username = "circle";
