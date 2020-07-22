@@ -32,6 +32,15 @@ export default class Menu extends Element {
           })
         );
         break;
+      case "edit-column-title":
+        this.$logs.pushFront(
+          data.logId,
+          new Log({
+            todoContent: `${data.username} changed column ${data.prevColumnContent} to ${data.nextColumnContent}`,
+          })
+        );
+        console.log("edit column", data);
+        break;
       default:
         throw new Error("Invalid log type: ", type);
     }
