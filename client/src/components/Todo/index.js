@@ -43,8 +43,12 @@ export default class Todo extends Element {
             columnContent: result.column_content,
             username: result.username,
           });
+
+          const parent = this.getDom().parentNode;
           this.getDom().dispatchEvent(logEvent);
           this.removeSelf();
+          parent.dispatchEvent(new Event("refreshcount", { bubbles: true }));
+          // parent.remove();
         });
       }.bind(this),
       { class: "reset-button-style" }

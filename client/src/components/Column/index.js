@@ -21,6 +21,9 @@ export default class Column extends Element {
       text: "" + todos.length,
       class: "column-todo-count",
     });
+    this.addEventListener("refreshcount", (evt) => {
+      this.refreshCount();
+    });
     headerLeft.appendChild(this.$count);
 
     this.$title = new H(2, title, {
@@ -93,7 +96,8 @@ export default class Column extends Element {
    * @private
    */
   refreshCount() {
-    this.$count.setText(this.$todos.getCount());
+    const count = this.$todos.getDom().querySelectorAll(".todo").length;
+    this.$count.setText(count);
   }
 
   addTodo(key, todo) {
