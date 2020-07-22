@@ -6,7 +6,6 @@ import "./Column.scss";
 
 const onTitleEdit = async (id, content) => {
   const response = await apiCallWrapper.modifyColumnApi(id, content);
-  console.log("response", response);
 };
 
 const handleColumnTitleDoubleClick = (event, id, columnTitle) => {
@@ -18,7 +17,7 @@ export default class Column extends Element {
   /**
    *
    * @param {string} content
-   * @param {Todo[]} todos
+   * @param {{todo_id, Todo}[]} todos
    */
   constructor(id, title, todos = []) {
     super("div", { class: "column" });
@@ -42,12 +41,10 @@ export default class Column extends Element {
     this.$newBtn = new Button(
       "+",
       (evt) => {
-        if (this.isNewBtnHidden) {
-          this.isNewBtnHidden = false;
-          this.$newTodoForm.getDom().classList.remove("display-none");
+        if (this.$newTodoForm.$isDisplay) {
+          this.$newTodoForm.setDisplayNone(true);
         } else {
-          this.isNewBtnHidden = true;
-          this.$newTodoForm.getDom().classList.add("display-none");
+          this.$newTodoForm.setDisplayNone(false);
         }
       },
       { class: ["reset-button-style"] }
@@ -67,7 +64,7 @@ export default class Column extends Element {
     header.appendChild(headerRight);
     this.appendChild(header);
 
-    this.$newTodoForm = new NewTodoForm();
+    this.$newTodoForm = new NewTodoForm(id, this.addTodo.bind(this));
     this.appendChild(this.$newTodoForm);
 
     this.$todos = new List(true);
