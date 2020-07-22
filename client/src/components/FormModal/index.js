@@ -46,8 +46,8 @@ export default class Form extends Element {
         this.$submitButton.getDom().classList.remove("button-disabled");
         this.$submitButton.getDom().disabled = false;
       }
-      if (content.length > 64) {
-        evt.target.value = content.substr(0, 64);
+      if (content.length > 50) {
+        evt.target.value = content.substr(0, 50);
       }
     });
 
