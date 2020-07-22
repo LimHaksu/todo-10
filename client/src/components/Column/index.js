@@ -88,7 +88,7 @@ export default class Column extends Element {
   }
 
   addTodo(key, todo) {
-    this.$todos.push(key, todo);
+    this.$todos.pushFront(key, todo);
     this.refreshCount();
   }
 
