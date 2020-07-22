@@ -16,6 +16,7 @@ export default class Column extends Element {
     const header = new Element("div", { class: "column-header" });
 
     const headerLeft = new Element("div", { class: "flex" });
+    this.$id = id;
     this.$count = new Element("div", {
       text: "" + todos.length,
       class: "column-todo-count",
@@ -24,21 +25,7 @@ export default class Column extends Element {
 
     this.$title = new H(2, title, {
       ondblclick: () => {
-        const onTitleEdit = async (content) => {
-          const response = await apiCallWrapper.modifyColumnApi(id, content);
-          this.setTitle(response.next_column_content);
-
-          // Create log event
-          const logEvent = new LogEvent("edit-column-title", {
-            logId: response.log_id,
-            prevColumnContent: response.prev_column_content,
-            nextColumnContent: response.next_column_content,
-            username: response.username,
-          });
-          this.getDom().dispatchEvent(logEvent);
-        };
-
-        new ModalColumnTitleEdit({ columnTitle: title, onEdit: onTitleEdit });
+        this.showColumnEditModal();
       },
     });
     headerLeft.appendChild(this.$title);
@@ -75,6 +62,30 @@ export default class Column extends Element {
 
     todos.forEach(([i, todo]) => {
       this.addTodo(i, todo);
+    });
+  }
+
+  /**
+   * @private
+   */
+  showColumnEditModal() {
+    const onTitleEdit = async (content) => {
+      if (content.length === 0) return;
+      const response = await apiCallWrapper.modifyColumnApi(this.$id, content);
+      this.setTitle(response.next_column_content);
+
+      // Create log event
+      const logEvent = new LogEvent("edit-column-title", {
+        logId: response.log_id,
+        prevColumnContent: response.prev_column_content,
+        nextColumnContent: response.next_column_content,
+        username: response.username,
+      });
+      this.getDom().dispatchEvent(logEvent);
+    };
+    new ModalColumnTitleEdit({
+      columnTitle: this.$title.getDom().textContent,
+      onEdit: onTitleEdit,
     });
   }
 
