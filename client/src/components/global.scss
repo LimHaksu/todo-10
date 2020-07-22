@@ -54,7 +54,7 @@
 }
 
 .button-green {
-  background-color: #94d3a2;
+  background-color: #2ea44e;
   border-color: #89c396;
   color: white;
 }
@@ -62,6 +62,11 @@
 .button-grey {
   background-color: #fafbfc;
   border-color: #999999;
+}
+
+.button-disabled {
+  background-color: #94d3a2;
+  cursor: default;
 }
 
 .form {
@@ -90,4 +95,8 @@
   h3 {
     font-size: 1.5rem;
   }
+}
+
+.display-none {
+  display: none;
 }

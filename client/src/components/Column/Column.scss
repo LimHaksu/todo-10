@@ -11,6 +11,13 @@
   .column-header {
     display: flex;
     justify-content: space-between;
+
+    .reset-button-style {
+      font-size: 1.5rem;
+    }
+    .reset-button-style:hover {
+      color: red;
+    }
   }
 
   .column-todo-count {

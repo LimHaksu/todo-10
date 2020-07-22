@@ -1,19 +1,20 @@
 import useDbConnection from "../../lib/useDbConnection";
+import getUserById from "../../lib/getUserById";
 
 const loadColumnSql = `
-SELECT * FROM todo_column ORDER BY idx
+SELECT * FROM todo_column WHERE user_id=? ORDER BY idx 
 `;
 
 const loadTodosSql = `
 SELECT * 
 FROM todo 
 WHERE column_id=?
-ORDER BY idx
+AND user_id=?
+ORDER BY idx DESC
 `;
 
-const username = "circle";
-async function loadTodos(conn, columnId) {
-  const [rows] = await conn.query(loadTodosSql, [columnId]);
+async function loadTodos(conn, columnId, userId, username) {
+  const [rows] = await conn.query(loadTodosSql, [columnId, userId]);
   return rows.map((row) => ({
     id: row.id,
     content: row.content,
@@ -25,8 +26,22 @@ async function loadTodos(conn, columnId) {
 }
 
 export default (req, res) => {
+  //TODO remove hardcoded userid
+  const userId = 1;
+
   useDbConnection(async (conn) => {
-    const [cols] = await conn.query(loadColumnSql);
+    const user = await getUserById(conn, userId);
+    if (!user) {
+      res.status(401);
+      res.json({
+        error: "Invalid user",
+      });
+      return;
+    }
+
+    const username = user.username;
+
+    const [cols] = await conn.query(loadColumnSql, [userId]);
     const result = await Promise.all(
       cols.map(
         (col) =>
@@ -36,10 +51,10 @@ export default (req, res) => {
                 id: col.id,
                 idx: col.idx,
                 content: col.content,
-                username: username,
+                username,
                 created_at: col.created_at,
                 updated_at: col.updated_at,
-                todo_list: await loadTodos(conn, col.id),
+                todo_list: await loadTodos(conn, col.id, userId, username),
               });
             } catch (e) {
               reject(e);

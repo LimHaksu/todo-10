@@ -9,7 +9,7 @@ export default class Column extends Element {
   /**
    *
    * @param {string} content
-   * @param {Todo[]} todos
+   * @param {{todo_id, Todo}[]} todos
    */
   constructor(id, title, todos = []) {
     super("div", { class: "column" });
@@ -37,11 +37,16 @@ export default class Column extends Element {
     this.$newBtn = new Button(
       "+",
       (evt) => {
-        alert("+ button clicked");
+        if (this.$newTodoForm.$isDisplay) {
+          this.$newTodoForm.setDisplayNone(true);
+        } else {
+          this.$newTodoForm.setDisplayNone(false);
+        }
       },
       { class: ["reset-button-style"] }
     );
     headerRight.appendChild(this.$newBtn);
+    this.isNewBtnHidden = true;
     this.$dotBtn = new Button(
       "...",
       (evt) => {
@@ -55,7 +60,7 @@ export default class Column extends Element {
     header.appendChild(headerRight);
     this.appendChild(header);
 
-    this.$newTodoForm = new NewTodoForm();
+    this.$newTodoForm = new NewTodoForm(id, this.addTodo.bind(this));
     this.appendChild(this.$newTodoForm);
 
     this.$todos = new List(true);
@@ -101,7 +106,7 @@ export default class Column extends Element {
   }
 
   addTodo(key, todo) {
-    this.$todos.push(key, todo);
+    this.$todos.pushFront(key, todo);
     this.refreshCount();
   }
 
