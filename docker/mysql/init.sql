@@ -38,7 +38,7 @@ CREATE TABLE todo(
 CREATE TABLE log(
     id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
-    action_type VARCHAR(6) NOT NULL,
+    action_type VARCHAR(20) NOT NULL,
     data TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
 
