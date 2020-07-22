@@ -75,7 +75,7 @@ export default class Column extends Element {
       this.setTitle(response.next_column_content);
 
       // Create log event
-      const logEvent = new LogEvent("edit-column-title", {
+      const logEvent = new LogEvent("column_update", {
         logId: response.log_id,
         prevColumnContent: response.prev_column_content,
         nextColumnContent: response.next_column_content,

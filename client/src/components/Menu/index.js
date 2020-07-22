@@ -62,7 +62,7 @@ export default class Menu extends Element {
         );
         break;
       default:
-        throw new Error("Invalid log type: ", type);
+        throw new Error("Invalid log type: " + type);
     }
   }
 }
