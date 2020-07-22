@@ -37,11 +37,11 @@ export default (req, res) => {
       // TODO: save log
       res.json({
         result: {
-        log_id: ~~(Math.random() * 1000),
-        todo_id: rows.insertId,
-        todo_content: content,
-        column_content,
-        username: user.username,
+          log_id: ~~(Math.random() * 1000),
+          todo_id: rows.insertId,
+          todo_content: content,
+          column_content,
+          username: user.username,
         },
       });
     });

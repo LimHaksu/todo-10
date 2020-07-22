@@ -44,6 +44,12 @@ const fetchWrapper = (url, method, data = {}) => {
   });
 };
 
+function addTodoApi(columnId, todoContent) {
+  return fetchWrapper("/api/todo", "POST", {
+    body: { column_id: columnId, content: todoContent },
+  });
+}
+
 function removeTodoApi(todo_id) {
   return fetchWrapper("/api/todo", "DELETE", { query: { todo_id } });
 }
@@ -63,4 +69,4 @@ function modifyColumnApi(column_id, next_column_content) {
   });
 }
 
-export default { removeTodoApi, loadTodoApi, modifyColumnApi };
+export default { addTodoApi, removeTodoApi, loadTodoApi, modifyColumnApi };
