@@ -38,5 +38,8 @@ export default class Main extends Element {
     this.addEventListener("log", (evt) => {
       menu.log(evt.detail.type, evt.detail.data);
     });
+    this.addEventListener("show-menu", (evt) => {
+      menu.setDisplay(true);
+    });
   }
 }
