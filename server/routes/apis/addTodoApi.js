@@ -36,11 +36,13 @@ export default (req, res) => {
       [rows] = await conn.query(addTodoSql, [user_id, column_id, content]);
       // TODO: save log
       res.json({
+        result: {
         log_id: ~~(Math.random() * 1000),
         todo_id: rows.insertId,
         todo_content: content,
         column_content,
         username: user.username,
+        },
       });
     });
   }
