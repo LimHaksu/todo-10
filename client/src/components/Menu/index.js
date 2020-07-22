@@ -21,10 +21,15 @@ export default class Menu extends Element {
 
   log(type, data) {
     switch (type) {
-      case "add-todo":
-        console.log("add", data);
+      case "todo_add":
+        this.$logs.pushFront(
+          data.logId,
+          new Log({
+            todoContent: `${data.username} added ${data.todoContent} to ${data.columnContent}`,
+          })
+        );
         break;
-      case "remove-todo":
+      case "todo_remove":
         this.$logs.pushFront(
           data.logId,
           new Log({
@@ -32,8 +37,32 @@ export default class Menu extends Element {
           })
         );
         break;
+      case "todo_update":
+        this.$logs.pushFront(
+          data.logId,
+          new Log({
+            todoContent: `${data.username} edited ${data.prevTodoContent} from ${data.nextTodoContent}`,
+          })
+        );
+        break;
+      case "todo_move":
+        this.$logs.pushFront(
+          data.logId,
+          new Log({
+            todoContent: `${data.username} moved ${data.todoContent} from ${data.prevColumnContent} to ${data.nextColumnContent}`,
+          })
+        );
+        break;
+      case "column_update":
+        this.$logs.pushFront(
+          data.logId,
+          new Log({
+            todoContent: `${data.username} changed column ${data.prevColumnContent} to ${data.nextColumnContent}`,
+          })
+        );
+        break;
       default:
-        throw new Error("Invalid log type: ", type);
+        throw new Error("Invalid log type: " + type);
     }
   }
 }

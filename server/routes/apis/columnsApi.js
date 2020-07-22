@@ -1,41 +1,53 @@
 import useDbConnection from "../../lib/useDbConnection";
+import getUserById from "../../lib/getUserById";
 
 const selectQuery = `select content from todo_column where id=?`;
 const updateQuery = `update todo_column set content=? where id=?`;
 
-const isValid = (columnId, nextColumnContent) => {
-  return (
-    columnId &&
-    typeof columnId === "number" &&
-    content &&
-    typeof content === string &&
-    content.length > 0
-  );
-};
+const isValidAll = (columnId, nextColumnContent) =>
+  columnId &&
+  typeof columnId === "number" &&
+  nextColumnContent &&
+  typeof nextColumnContent === "string" &&
+  nextColumnContent.length > 0;
 
 const modifyColumnContent = (req, res) => {
-  const { columnId, nextColumnContent } = req.body;
-  if (isValid(columnId, nextColumnContent)) {
+  const columnId = req.body.column_id;
+  const nextColumnContent = req.body.next_column_content;
+
+  //TODO remove hardcoded user id
+  const userId = 1;
+
+  if (isValidAll(columnId, nextColumnContent)) {
     useDbConnection(async (con) => {
+      const user = await getUserById(con, userId);
+      if (!user) {
+        res.status(401);
+        res.json({
+          error: "Invalid user",
+        });
+      }
+
       const [[selectResult]] = await con.query(selectQuery, [columnId]);
+      if (!selectResult) {
+        res.status(400);
+        res.json({ error: "Invalid values" });
+        return;
+      }
       const prevColumnContent = selectResult.content;
 
       const [updateResult] = await con.query(updateQuery, [
         nextColumnContent,
         columnId,
       ]);
-      if (updateResult.changedRows === 1) {
-        res.json({
-          result: {
-            log_id: 361,
-            prev_column_content: prevColumnContent,
-            next_column_content: nextColumnContent,
-          },
-        });
-      } else {
-        res.status(500);
-        res.json({ error: "수정된 내용 없음." });
-      }
+      res.json({
+        result: {
+          log_id: ~~(Math.random() * 1000),
+          prev_column_content: prevColumnContent,
+          next_column_content: nextColumnContent,
+          username: user.username,
+        },
+      });
     });
   } else {
     res.status(400);

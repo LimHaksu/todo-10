@@ -24,10 +24,12 @@ export default (req, res) => {
   } else {
     useDbConnection(async (conn) => {
       const user = await getUserById(conn, user_id);
-      if (!user)
+      if (!user) {
+        res.status(401);
         res.json({
           error: "Invalid user",
         });
+      }
       let [rows] = await conn.query(selectColumnByIdSql, [column_id]);
       if (rows.length == 0) throw new Error("Column isn't exist.");
       const column_content = rows[0].title;

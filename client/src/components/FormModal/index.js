@@ -37,6 +37,20 @@ export default class Form extends Element {
         throw new Error("Invalid Form Element");
     }
 
+    this.$inputContent.getDom().addEventListener("input", (evt) => {
+      const content = evt.target.value;
+      if (content.length === 0) {
+        this.$submitButton.getDom().classList.add("button-disabled");
+        this.$submitButton.getDom().disabled = true;
+      } else {
+        this.$submitButton.getDom().classList.remove("button-disabled");
+        this.$submitButton.getDom().disabled = false;
+      }
+      if (content.length > 50) {
+        evt.target.value = content.substr(0, 50);
+      }
+    });
+
     this.$submitButton = new Button("Save note", null, {
       class: ["button-form", "button-green"],
     });
