@@ -20,7 +20,7 @@ export default (req, res) => {
     useDbConnection(async (conn) => {
       let [
         rows,
-      ] = await conn.query("select id, title from todo_column where id=?", [
+      ] = await conn.query("select id, content from todo_column where id=?", [
         column_id,
       ]);
       if (rows.length == 0) throw new Error("Column isn't exist.");
