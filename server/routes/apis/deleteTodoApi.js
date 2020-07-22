@@ -42,7 +42,7 @@ export default (req, res) => {
         };
 
         await conn.query("DELETE FROM todo WHERE id=?", [id]);
-        await conn.query(insertTodoRemoveLogSql, [
+        [rows] = await conn.query(insertTodoRemoveLogSql, [
           userId,
           "todo_remove",
           JSON.stringify(data),
@@ -50,7 +50,7 @@ export default (req, res) => {
 
         res.json({
           result: {
-            log_id: ~~(Math.random() * 1000),
+            log_id: rows.insertId,
             todo_id: id,
             todo_content: todoContent,
             column_content: columnContent,
