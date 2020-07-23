@@ -1,28 +1,48 @@
-import { Element, List } from "../basic";
+import { Element, List, Button } from "../basic";
 import Log from "../Log";
 import "./Menu.css";
 import api from "../../lib/apiCallWrapper";
 
 export default class Menu extends Element {
   constructor() {
-    super("div", { class: "menu" });
-    const title = new Element("div", { class: "menu-title", text: "☰ Menu" });
+    super("div", { class: ["menu", "menu-hidden"] });
+    const title = new Element("div", {
+      class: ["menu-title", "flex-spacebetween"],
+      text: "☰ Menu",
+    });
+    const closeButton = new Button(
+      "❌",
+      (evt) => {
+        evt.preventDefault();
+        this.setHidden(true);
+      },
+      {
+        class: "close-button",
+      }
+    );
+    title.appendChild(closeButton);
     this.appendChild(title);
     const activityTitle = new Element("div", {
-      class: "menu-title",
+      class: "menu-activity",
       text: "🔔 Activity",
     });
     this.appendChild(activityTitle);
     this.$logs = new List(true);
     this.appendChild(this.$logs);
     api.loadLogsApi().then((res) => {
-      console.log(res);
       res.forEach(({ action_type, data }) => {
         this.log(action_type, data);
       });
     });
   }
 
+  setHidden(flag) {
+    if (flag) {
+      this.getDom().classList.add("menu-hidden");
+    } else {
+      this.getDom().classList.remove("menu-hidden");
+    }
+  }
   log(type, data) {
     switch (type) {
       case "todo_add":

@@ -1,6 +1,7 @@
 .log {
   width: 330px;
   padding: 1rem;
+  box-sizing: border-box;
   border-bottom: 1px solid;
   border-color: #e1e4e8;
 }
