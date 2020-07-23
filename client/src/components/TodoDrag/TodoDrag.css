@@ -1,5 +1,7 @@
 .ghost-todo {
   position: fixed;
-  opacity: 0.5;
+  opacity: 0.8;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
   z-index: 9999;
+  transform: scale(1.05);
 }
