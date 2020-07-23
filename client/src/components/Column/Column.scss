@@ -1,4 +1,6 @@
 .column {
+  display: flex;
+  flex-direction: column;
   width: 400px;
   height: 100%;
   border-radius: 20px;

@@ -60,10 +60,10 @@ export default class Column extends Element {
     header.appendChild(headerRight);
     this.appendChild(header);
 
-    const todosWrapper = new Element("div", { class: "column-todos-wrapper" });
-
     this.$newTodoForm = new NewTodoForm(id, this.addTodo.bind(this));
-    todosWrapper.appendChild(this.$newTodoForm);
+    this.appendChild(this.$newTodoForm);
+
+    const todosWrapper = new Element("div", { class: "column-todos-wrapper" });
 
     this.$todos = new List(true);
     todosWrapper.appendChild(this.$todos);
