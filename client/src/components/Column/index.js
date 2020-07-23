@@ -90,6 +90,7 @@ export default class Column extends Element {
         prevColumnContent: response.prev_column_content,
         nextColumnContent: response.next_column_content,
         username: response.username,
+        createdAt: response.created_at,
       });
       this.getDom().dispatchEvent(logEvent);
     };
