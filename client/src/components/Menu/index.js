@@ -21,6 +21,9 @@ function formatLogString(type, data) {
     case "column_update":
       result += `changed column <span class="todo-content">${data.prevColumnContent}</span> to <span class="column-content">${data.nextColumnContent}`;
       break;
+    case "column_add":
+      result += `created a column <span class="column-content">${data.columnContent}</span>`;
+      break;
     default:
       throw new Error("Invalid log type: " + type);
   }

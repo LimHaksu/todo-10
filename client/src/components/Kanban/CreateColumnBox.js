@@ -1,4 +1,5 @@
 import { Element, Modal, Input } from "../basic";
+import api from "../../lib/apiCallWrapper";
 import FormModal from "../FormModal";
 import "./CreateColumnBox.css";
 
@@ -26,7 +27,9 @@ export default class CreateColumnBox extends Element {
     const createColumn = () => {
       new CreateColumnModal({
         onEdit: (content) => {
-          alert(content);
+          api.addColumnApi(content).then((res) => {
+            history.go(0);
+          });
         },
       });
     };
