@@ -75,14 +75,27 @@ export default class Todo extends Element {
         new ModalTodoEdit({
           id,
           initialContent: this.$content,
-          onEdit: (id, msg) => {
-            alert(id + " : " + msg);
-          },
+          onEdit: this.handleEditSubmit.bind(this),
         });
         this.$clickCount = 0;
       }
     });
   }
 
-  changeContent(content) {}
+  async handleEditSubmit(id, content) {
+    const response = await api.editTodoApi(id, content);
+    const logEvent = new LogEvent("todo_update", {
+      logId: response.log_id,
+      prevTodoContent: response.prev_todo_content,
+      nextTodoContent: response.next_todo_content,
+      username: response.username,
+    });
+    this.getDom().dispatchEvent(logEvent);
+    this.setContent(response.next_todo_content);
+  }
+
+  setContent(content) {
+    this.$content = content;
+    this.$contentDiv.setText(content);
+  }
 }
