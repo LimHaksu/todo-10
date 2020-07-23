@@ -1,5 +1,4 @@
-import useDbConnection from "../../lib/useDbConnection";
-import saveLog from "../../lib/saveLog";
+import { useDbConnection, saveLog, checkUser } from "../../lib";
 
 const selectTodoSql = "SELECT * FROM todo WHERE id=? AND user_id=?";
 const updatePrevColumnSql =
@@ -11,12 +10,8 @@ const selectColumnSql = "SELECT * FROM todo_column WHERE id=?";
 
 export default (req, res) => {
   useDbConnection(async (conn) => {
+    if (!checkUser(req, res)) return;
     const user = req.user;
-    if (!user) {
-      res.status(401);
-      res.json({ error: "Invalid user" });
-      return;
-    }
 
     const [todo_id, next_idx, next_column_id] = [
       "todo_id",
@@ -31,6 +26,12 @@ export default (req, res) => {
     }
 
     const [[prevTodo]] = await conn.query(selectTodoSql, [todo_id, user.id]);
+    if (!prevTodo) {
+      res.status(400);
+      res.json({ error: "Invalid values" });
+      return;
+    }
+
     const [[prevColumn]] = await conn.query(selectColumnSql, [
       prevTodo.column_id,
     ]);
@@ -54,7 +55,17 @@ export default (req, res) => {
         nextColumnContent: nextColumn.content,
       });
 
-      res.json({ result: log });
+      res.json({
+        result: {
+          log_id: log.id,
+          todo_id: todo_id,
+          prev_column_content: prevColumn.content,
+          next_column_content: nextColumn.content,
+          todo_content: prevTodo.content,
+          username: user.username,
+          created_at: log.created_at,
+        },
+      });
     }
   });
 };
