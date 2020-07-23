@@ -6,6 +6,7 @@ import deleteTodoApi from "./apis/deleteTodoApi";
 import loadLogsApi from "./apis/loadLogsApi";
 import editTodoApi from "./apis/editTodoApi";
 import moveTodoApi from "./apis/moveTodoApi";
+import addColumnApi from "./apis/addColumnApi";
 
 const router = Router();
 
@@ -17,6 +18,7 @@ router.delete("/todo", deleteTodoApi);
 router.patch("/todo", editTodoApi);
 router.patch("/todo_move", moveTodoApi);
 
+router.post("/column", addColumnApi);
 router.patch("/todo_column", modifyColumnContent);
 
 module.exports = router;
