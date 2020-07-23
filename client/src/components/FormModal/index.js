@@ -55,8 +55,10 @@ export default class Form extends Element {
       class: ["button-form", "button-green"],
     });
 
-    if (initialContent.trim().length === 0)
+    if (initialContent.trim().length === 0) {
       this.$submitButton.getDom().classList.add("button-disabled");
+      this.$submitButton.getDom().disabled = true;
+    }
 
     this.appendChild(this.$inputContent);
     this.appendChild(this.$submitButton);
