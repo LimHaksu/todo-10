@@ -1,4 +1,4 @@
-import DragPlaceholder from "./DragPlaceholder";
+import api from "../../lib/apiCallWrapper";
 import "./TodoDrag.css";
 
 const setDomTopLeft = (dom, top, left) => {
@@ -38,14 +38,9 @@ const getHandleMousemoveForPlaceHolder = (placeholder) => {
     );
 
     if (!closestBeforeTodoLi) {
-      col
-        .querySelector("ol")
-        .insertAdjacentElement("afterbegin", placeholder.getDom());
+      col.querySelector("ol").insertAdjacentElement("afterbegin", placeholder);
     } else {
-      closestBeforeTodoLi.insertAdjacentElement(
-        "afterend",
-        placeholder.getDom()
-      );
+      closestBeforeTodoLi.insertAdjacentElement("afterend", placeholder);
     }
   };
 };
@@ -63,8 +58,8 @@ const getHandleMouseUp = (ghostNode, placeholder, bodyEvents) => {
 
     const li = document.createElement("li");
     li.appendChild(ghostNode);
-    placeholder.getDom().parentNode.insertBefore(li, placeholder.getDom());
-    placeholder.getDom().remove();
+    placeholder.parentNode.insertBefore(li, placeholder);
+    placeholder.remove();
     bodyEvents.forEach(([evtname, fn]) => {
       document.body.removeEventListener(evtname, fn);
     });
@@ -76,11 +71,9 @@ export default class TodoDrag {
     const { top, left, right } = dom.getBoundingClientRect();
     dom.style.width = `${right - left}px`;
 
-    const placeholder = new DragPlaceholder();
-    dom.parentNode.parentNode.insertBefore(
-      placeholder.getDom(),
-      dom.parentNode
-    );
+    const placeholder = dom.cloneNode(true);
+    placeholder.classList.add("todo-place-holder");
+    dom.parentNode.parentNode.insertBefore(placeholder, dom.parentNode);
 
     let bodyEvents = [];
     dom.parentNode.remove(); // remove li from column;
