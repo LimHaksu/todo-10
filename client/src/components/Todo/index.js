@@ -24,7 +24,7 @@ export default class Todo extends Element {
     const centerDiv = new Element("div", {
       class: ["flex-grow-1", "margin1", "todo-center"],
     });
-    this.$contentDiv = new Element("div", { text: content });
+    this.$contentDiv = new Element("section", { text: content });
     this.$content = content;
     const authorDiv = new Element("div", { text: `Added by ${username}` });
     centerDiv.appendChild(this.$contentDiv);
