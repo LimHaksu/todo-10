@@ -1,6 +1,6 @@
 import { useDbConnection, saveLog, checkUser } from "../../lib";
 
-const selectQuery = `select content from todo_column where id=?`;
+const selectQuery = `select content from todo_column where id=? AND user_id=?`;
 const updateQuery = `update todo_column set content=? where id=?`;
 
 const isValidAll = (columnId, nextColumnContent) =>
@@ -24,7 +24,7 @@ const modifyColumnContent = (req, res) => {
   }
 
   useDbConnection(async (conn) => {
-    const [[selectResult]] = await conn.query(selectQuery, [columnId]);
+    const [[selectResult]] = await conn.query(selectQuery, [columnId, user.id]);
     if (!selectResult) {
       res.status(400);
       res.json({ error: "Invalid values" });
