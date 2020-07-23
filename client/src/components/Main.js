@@ -11,22 +11,6 @@ export default class Main extends Element {
     this.$el = document.getElementById("app");
     this.appendChild(new Header());
 
-    this.appendChild(
-      new Button(
-        "show todo edit modal",
-        () => {
-          new ModalTodoEdit({
-            content: "todotodotodotodadsf;lkjas",
-            onEdit: () => {
-              alert("onEdit Todo");
-            },
-            id: 1,
-          });
-        },
-        { class: ["button-form", "button-green"] }
-      )
-    );
-
     const kanban = new Kanban();
 
     this.appendChild(kanban);
