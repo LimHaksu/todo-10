@@ -1,0 +1,12 @@
+.create-column-box {
+  border: 5px dashed gray;
+  border-radius: 20px;
+  height: 200px;
+  width: 400px;
+  background-color: #eff1f3;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
