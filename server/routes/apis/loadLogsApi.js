@@ -1,21 +1,14 @@
-import useDbConnection from "../../lib/useDbConnection";
-import getUserById from "../../lib/getUserById";
+import { useDbConnection, saveLog, checkUser } from "../../lib";
 
 const loadLogsSql = `
 SELECT * FROM log WHERE user_id=? ORDER BY created_at 
 `;
 
 export default (req, res) => {
-  const userId = 1;
+  if (!checkUser(req, res)) return;
+  const user = req.user;
   useDbConnection(async (conn) => {
-    const user = await getUserById(conn, userId);
-    if (!user) {
-      res.status(401);
-      res.json({ error: "Invalid user" });
-      return;
-    }
-
-    let [rows] = await conn.query(loadLogsSql, [userId]);
+    let [rows] = await conn.query(loadLogsSql, [user.id]);
     const result = rows.map((row) => ({
       action_type: row.action_type,
       data: {
