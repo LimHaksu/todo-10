@@ -10,6 +10,10 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use((req, res, next) => {
+  req.user = { id: 1, username: "Abel" };
+  return next();
+});
 
 app.use("/api", apiRouter);
 

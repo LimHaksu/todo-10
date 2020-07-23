@@ -73,7 +73,8 @@ const getHandleMouseUp = (ghostNode, placeholder, bodyEvents) => {
 
 export default class TodoDrag {
   constructor(dom, offsetX, offsetY) {
-    const { top, left } = dom.getBoundingClientRect();
+    const { top, left, right } = dom.getBoundingClientRect();
+    dom.style.width = `${right - left}px`;
 
     const placeholder = new DragPlaceholder();
     dom.parentNode.parentNode.insertBefore(

@@ -1,10 +1,10 @@
 .todo,
 .ghost-todo,
 .todo-placeholder {
-  width: 250px;
-  min-height: 100px;
+  width: 100%;
+  min-height: 150px;
   background: white;
-  margin: 1rem;
+  margin: 1rem auto;
   padding: 1rem;
   border-radius: 1rem;
 }
@@ -18,4 +18,15 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 0 1rem;
+}
+
+.todo section,
+.ghost-todo section {
+  margin-bottom: 1.5rem;
+  line-height: 1.25;
+}
+
+.font-size115 {
+  font-size: 1.15rem;
 }
