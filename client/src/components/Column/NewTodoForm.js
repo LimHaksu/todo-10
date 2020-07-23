@@ -26,6 +26,7 @@ const handleAddButtonClick = async (
       todoContent: result.todo_content,
       columnContent: result.column_content,
       username: result.username,
+      createdAt: result.created_at,
     });
     emitLogEvent(logEvent);
 

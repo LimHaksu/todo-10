@@ -37,6 +37,7 @@ export default class Todo extends Element {
             todoContent: result.todo_content,
             columnContent: result.column_content,
             username: result.username,
+            createdAt: result.created_at,
           });
 
           const parent = this.getDom().parentNode;
@@ -94,6 +95,7 @@ export default class Todo extends Element {
       prevTodoContent: response.prev_todo_content,
       nextTodoContent: response.next_todo_content,
       username: response.username,
+      createdAt: response.created_at,
     });
     this.getDom().dispatchEvent(logEvent);
     this.setContent(response.next_todo_content);
