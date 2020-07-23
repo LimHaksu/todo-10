@@ -121,25 +121,31 @@ export default class TodoDrag {
       const nextColumnId = col.columnId;
       const nextIdx = getNextIdx(evt.clientY, col);
       const response = await api.moveTodoApi(todoId, nextIdx, nextColumnId);
+
       if (response) {
         const logEvent = new LogEvent("todo_move", {
-          logId: response.id,
-          todoId,
-          prevColumnContent: response.data.prevColumnContent,
-          nextColumnContent: response.data.nextColumnContent,
-          todoContent: response.data.todoContent,
+          logId: response.log_id,
+          todoId: response.todo_id,
+          prevColumnContent: response.prev_column_content,
+          nextColumnContent: response.next_column_content,
+          todoContent: response.todo_content,
           username: response.username,
-          createdAt: response.createdAt,
+          createdAt: response.created_at,
         });
-        placeholder.getDom().dispatchEvent(logEvent);
+        placeholder.dispatchEvent(logEvent);
       }
 
       const li = document.createElement("li");
       li.appendChild(ghostNode);
-      placeholder.getDom().parentNode.insertBefore(li, placeholder.getDom());
-      placeholder.getDom().remove();
+      placeholder.parentNode.insertBefore(li, placeholder);
+      placeholder.remove();
       bodyEvents.forEach(([evtname, fn]) => {
         document.body.removeEventListener(evtname, fn);
+      });
+      const columns = document.querySelectorAll(".column");
+      Array.from(columns).forEach((column) => {
+        console.log(column);
+        column.$ref.refreshCount();
       });
     };
   }

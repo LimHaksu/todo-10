@@ -6,6 +6,7 @@ export default class Element {
    */
   constructor(tag, option) {
     this.$el = document.createElement(tag);
+    this.$el.$ref = this;
 
     if (!option) return;
     if (option.id) {
