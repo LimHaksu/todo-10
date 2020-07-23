@@ -42,11 +42,6 @@ export default (req, res) => {
     };
 
     const log = await saveLog(conn, user.id, "todo_add", data);
-    const [insertLogResult] = await conn.query(insertTodoAddLogSql, [
-      user.id,
-      "todo_add",
-      JSON.stringify(data),
-    ]);
 
     res.json({
       result: {
