@@ -58,12 +58,14 @@ export default (req, res) => {
     const createdAt = rows[0].created_at;
 
     res.json({
-      log_id: logId,
-      todo_id,
-      prev_todo_content,
-      next_todo_content: todo_content,
-      username: user.username,
-      created_at: createdAt,
+      result: {
+        log_id: logId,
+        todo_id,
+        prev_todo_content,
+        next_todo_content: todo_content,
+        username: user.username,
+        created_at: createdAt,
+      },
     });
   });
 };
