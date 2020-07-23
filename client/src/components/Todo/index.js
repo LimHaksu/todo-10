@@ -30,7 +30,9 @@ export default class Todo extends Element {
     centerDiv.appendChild(this.$contentDiv);
     centerDiv.appendChild(authorDiv);
 
-    const trashIcon = new Element("i", { class: ["fas", "fa-trash-alt"] });
+    const trashIcon = new Element("i", {
+      class: ["fas", "fa-trash-alt", "font-size115"],
+    });
     const deleteDiv = new Element("div");
     const deleteButton = new Button(
       "",
@@ -49,7 +51,6 @@ export default class Todo extends Element {
           this.getDom().dispatchEvent(logEvent);
           this.removeSelf();
           parent.dispatchEvent(new Event("refreshcount", { bubbles: true }));
-          // parent.remove();
         });
       }.bind(this),
       { class: "reset-button-style" }
