@@ -57,6 +57,7 @@ export default class Todo extends Element {
     this.appendChild(deleteDiv);
     this.$clickCount = 0;
     this.addEventListener("mousedown", (evt) => {
+      if (evt.which !== 1 || evt.button !== 0) return;
       this.$clickCount++;
       if (this.$clickCount === 1) {
         // single click
