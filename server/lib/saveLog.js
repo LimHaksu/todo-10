@@ -11,7 +11,6 @@ async function saveLog(conn, userId, actionType, data) {
   ];
 
   if (!validActionType.includes(actionType)) {
-    console.log(actionType, validActionType, actionType in validActionType);
     throw new Error("Invalid actionType: " + actionType);
   }
 
