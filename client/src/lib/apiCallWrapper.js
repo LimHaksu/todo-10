@@ -58,6 +58,12 @@ function loadTodoApi() {
   return fetchWrapper("/api/todos", "GET", {});
 }
 
+function editTodoApi(todo_id, todo_content) {
+  return fetchWrapper("/api/todo", "PATCH", {
+    body: { todo_id, todo_content },
+  });
+}
+
 function loadLogsApi() {
   return fetchWrapper("/api/logs", "GET", {});
 }
@@ -77,6 +83,7 @@ export default {
   addTodoApi,
   removeTodoApi,
   loadTodoApi,
+  editTodoApi,
   modifyColumnApi,
   loadLogsApi,
 };

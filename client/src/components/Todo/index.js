@@ -10,15 +10,6 @@ import ModalConfirm from "../basic/ModalConfirm";
 export default class Todo extends Element {
   constructor({ id, content, username }) {
     super("div", { class: ["todo", "flex"] });
-    this.addEventListener("dblclick", () => {
-      new ModalTodoEdit({
-        id,
-        initialContent: this.$content,
-        onEdit: (id, msg) => {
-          alert(id + " : " + msg);
-        },
-      });
-    });
     const iconDiv = new Element("i", { class: ["fas", "fa-archive"] });
 
     const centerDiv = new Element("div", {
@@ -64,18 +55,50 @@ export default class Todo extends Element {
     this.appendChild(iconDiv);
     this.appendChild(centerDiv);
     this.appendChild(deleteDiv);
+    this.$clickCount = 0;
     this.addEventListener("mousedown", (evt) => {
-      const getTodoDom = (dom) => {
-        if (dom.classList.contains("todo")) return dom;
-        else return getTodoDom(dom.parentNode);
-      };
-      const todoDom = getTodoDom(evt.target);
-      const { top, left } = todoDom.getBoundingClientRect();
-      const offsetX = evt.clientX - left;
-      const offsetY = evt.clientY - top;
-      new TodoDrag(todoDom, offsetX, offsetY);
+      this.$clickCount++;
+      if (this.$clickCount === 1) {
+        // single click
+        const getTodoDom = (dom) => {
+          if (dom.classList.contains("todo")) return dom;
+          else return getTodoDom(dom.parentNode);
+        };
+        const todoDom = getTodoDom(evt.target);
+        const { top, left } = todoDom.getBoundingClientRect();
+        const offsetX = evt.clientX - left;
+        const offsetY = evt.clientY - top;
+        new TodoDrag(todoDom, offsetX, offsetY);
+
+        setTimeout(() => {
+          this.$clickCount = 0;
+        }, 300);
+      } else if (this.$clickCount === 2) {
+        // double click
+        new ModalTodoEdit({
+          id,
+          initialContent: this.$content,
+          onEdit: this.handleEditSubmit.bind(this),
+        });
+        this.$clickCount = 0;
+      }
     });
   }
 
-  changeContent(content) {}
+  async handleEditSubmit(id, content) {
+    const response = await api.editTodoApi(id, content);
+    const logEvent = new LogEvent("todo_update", {
+      logId: response.log_id,
+      prevTodoContent: response.prev_todo_content,
+      nextTodoContent: response.next_todo_content,
+      username: response.username,
+    });
+    this.getDom().dispatchEvent(logEvent);
+    this.setContent(response.next_todo_content);
+  }
+
+  setContent(content) {
+    this.$content = content;
+    this.$contentDiv.setText(content);
+  }
 }
