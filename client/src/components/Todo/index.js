@@ -19,7 +19,7 @@ export default class Todo extends Element {
         },
       });
     });
-    const iconDiv = new Element("div", { text: "📝" });
+    const iconDiv = new Element("i", { class: ["fas", "fa-archive"] });
 
     const centerDiv = new Element("div", {
       class: ["flex-grow-1", "margin1", "todo-center"],
@@ -30,9 +30,10 @@ export default class Todo extends Element {
     centerDiv.appendChild(this.$contentDiv);
     centerDiv.appendChild(authorDiv);
 
+    const trashIcon = new Element("i", { class: ["fas", "fa-trash-alt"] });
     const deleteDiv = new Element("div");
     const deleteButton = new Button(
-      "🗑️",
+      "",
       async function () {
         new ModalConfirm(async () => {
           const result = await api.removeTodoApi(id);
@@ -53,6 +54,7 @@ export default class Todo extends Element {
       }.bind(this),
       { class: "reset-button-style" }
     );
+    deleteButton.appendChild(trashIcon);
     deleteButton.addEventListener("mousedown", (evt) => {
       evt.stopPropagation();
     });
