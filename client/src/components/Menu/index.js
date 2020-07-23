@@ -3,6 +3,30 @@ import Log from "../Log";
 import "./Menu.css";
 import api from "../../lib/apiCallWrapper";
 
+function formatLogString(type, data) {
+  let result = `<span class="username">${data.username}</span> `;
+  switch (type) {
+    case "todo_add":
+      result += `added <span class="todo-content">${data.todoContent}</span> to <span class="column-content">${data.columnContent}</span>`;
+      break;
+    case "todo_remove":
+      result += `removed <span class="todo-content">${data.todoContent}</span> from <span class="column-content">${data.columnContent}</span>`;
+      break;
+    case "todo_update":
+      result += `edited <span class="todo-content">${data.prevTodoContent}</span> from <span class="todo-content">${data.nextTodoContent}</span>`;
+      break;
+    case "todo_move":
+      result += `moved <span class="todo-content">${data.todoContent}</span> from <span class="column-content">${data.prevColumnContent}</span> to <span class="column-content">${data.nextColumnContent}</span>`;
+      break;
+    case "column_update":
+      result += `changed column <span class="todo-content">${data.prevColumnContent}</span> to <span class="column-content">${data.nextColumnContent}`;
+      break;
+    default:
+      throw new Error("Invalid log type: " + type);
+  }
+  return result;
+}
+
 export default class Menu extends Element {
   constructor() {
     super("div", { class: ["menu", "menu-hidden"] });
@@ -44,49 +68,12 @@ export default class Menu extends Element {
     }
   }
   log(type, data) {
-    switch (type) {
-      case "todo_add":
-        this.$logs.pushFront(
-          data.logId,
-          new Log({
-            todoContent: `${data.username} added ${data.todoContent} to ${data.columnContent}`,
-          })
-        );
-        break;
-      case "todo_remove":
-        this.$logs.pushFront(
-          data.logId,
-          new Log({
-            todoContent: `${data.username} removed ${data.todoContent} from ${data.columnContent}`,
-          })
-        );
-        break;
-      case "todo_update":
-        this.$logs.pushFront(
-          data.logId,
-          new Log({
-            todoContent: `${data.username} edited ${data.prevTodoContent} from ${data.nextTodoContent}`,
-          })
-        );
-        break;
-      case "todo_move":
-        this.$logs.pushFront(
-          data.logId,
-          new Log({
-            todoContent: `${data.username} moved ${data.todoContent} from ${data.prevColumnContent} to ${data.nextColumnContent}`,
-          })
-        );
-        break;
-      case "column_update":
-        this.$logs.pushFront(
-          data.logId,
-          new Log({
-            todoContent: `${data.username} changed column ${data.prevColumnContent} to ${data.nextColumnContent}`,
-          })
-        );
-        break;
-      default:
-        throw new Error("Invalid log type: " + type);
-    }
+    this.$logs.pushFront(
+      data.logId,
+      new Log({
+        todoContent: formatLogString(type, data),
+        createdAt: data.createdAt,
+      })
+    );
   }
 }

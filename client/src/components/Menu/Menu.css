@@ -30,3 +30,18 @@
   border: none;
   cursor: pointer;
 }
+
+.menu * {
+  color: gray;
+}
+.menu .username {
+  color: blue;
+}
+
+.menu .todo-content {
+  color: black;
+}
+.menu .column-content {
+  color: black;
+  font-weight: bold;
+}
