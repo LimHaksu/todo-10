@@ -1,20 +1,16 @@
-import useDbConnection from "../../lib/useDbConnection";
-import getUserById from "../../lib/getUserById";
+import { useDbConnection, saveLog, checkUser } from "../../lib";
 
 const loadTodoSql = `SELECT * FROM todo WHERE id=?`;
 const updateTodoSql = `UPDATE todo SET content=? WHERE id=?`;
-const insertUpdateTodoLogSql = `
-INSERT INTO log 
-(user_id, action_type, data)
-VALUES (?, "todo_update", ?)
-`;
 
 function validateBody(id, content) {
   return id > 0 && typeof content === "string" && content.length > 0;
 }
 
 export default (req, res) => {
-  const userId = 1;
+  if (!checkUser(req, res)) return;
+  const user = req.user;
+
   let { todo_id, todo_content } = req.body;
   todo_id = parseInt(todo_id);
 
@@ -25,13 +21,6 @@ export default (req, res) => {
   }
 
   useDbConnection(async (conn) => {
-    const user = await getUserById(conn, userId);
-    if (!user) {
-      res.status(401);
-      res.json({ error: "Invalid user" });
-      return;
-    }
-
     let [rows] = await conn.query(loadTodoSql, [todo_id]);
     if (rows.length === 0) {
       res.status(400);
@@ -49,22 +38,16 @@ export default (req, res) => {
       nextTodoContent: todo_content,
     };
 
-    [rows] = await conn.query(insertUpdateTodoLogSql, [
-      userId,
-      JSON.stringify(logData),
-    ]);
-    const logId = rows.insertId;
-    [rows] = await conn.query("SELECT created_at FROM log WHERE id=?", [logId]);
-    const createdAt = rows[0].created_at;
+    const log = await saveLog(conn, user.id, "todo_update", logData);
 
     res.json({
       result: {
-        log_id: logId,
+        log_id: log.id,
         todo_id,
         prev_todo_content,
         next_todo_content: todo_content,
         username: user.username,
-        created_at: createdAt,
+        created_at: log.created_at,
       },
     });
   });
