@@ -7,8 +7,6 @@ class CreateColumnModal extends Modal {
     const contentElement = new Element("div");
     super(`Add a Column`, contentElement);
 
-    this.$input = new Input();
-
     this.$form = new FormModal(
       { inputType: "input", initialContent: "" },
       onEdit
