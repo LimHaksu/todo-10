@@ -39,7 +39,7 @@ export default class Form extends Element {
 
     this.$inputContent.getDom().addEventListener("input", (evt) => {
       const content = evt.target.value;
-      if (content.length === 0) {
+      if (content.trim().length === 0) {
         this.$submitButton.getDom().classList.add("button-disabled");
         this.$submitButton.getDom().disabled = true;
       } else {
@@ -55,7 +55,9 @@ export default class Form extends Element {
       class: ["button-form", "button-green"],
     });
 
-    this.appendChild(new H(3, "Note"));
+    if (initialContent.trim().length === 0)
+      this.$submitButton.getDom().classList.add("button-disabled");
+
     this.appendChild(this.$inputContent);
     this.appendChild(this.$submitButton);
   }
