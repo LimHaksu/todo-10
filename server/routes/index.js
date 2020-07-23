@@ -1,6 +1,6 @@
 import { Router } from "express";
 import todosApi from "./apis/loadTodosApi";
-import columnsApi from "./apis/columnsApi";
+import modifyColumnContent from "./apis/columnsApi";
 import addTodoApi from "./apis/addTodoApi";
 import deleteTodoApi from "./apis/deleteTodoApi";
 import loadLogsApi from "./apis/loadLogsApi";
@@ -17,6 +17,6 @@ router.delete("/todo", deleteTodoApi);
 router.patch("/todo", editTodoApi);
 router.patch("/todo_move", moveTodoApi);
 
-router.patch("/todo_column", columnsApi.modifyColumnContent);
+router.patch("/todo_column", modifyColumnContent);
 
 module.exports = router;

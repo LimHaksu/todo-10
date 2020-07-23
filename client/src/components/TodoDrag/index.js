@@ -1,4 +1,3 @@
-import DragPlaceholder from "./DragPlaceholder";
 import api from "../../lib/apiCallWrapper";
 import LogEvent from "../../lib/LogEvent";
 import "./TodoDrag.css";
@@ -60,14 +59,9 @@ const getHandleMousemoveForPlaceHolder = (placeholder) => {
     );
 
     if (!closestBeforeTodoLi) {
-      col
-        .querySelector("ol")
-        .insertAdjacentElement("afterbegin", placeholder.getDom());
+      col.querySelector("ol").insertAdjacentElement("afterbegin", placeholder);
     } else {
-      closestBeforeTodoLi.insertAdjacentElement(
-        "afterend",
-        placeholder.getDom()
-      );
+      closestBeforeTodoLi.insertAdjacentElement("afterend", placeholder);
     }
   };
 };
@@ -83,11 +77,9 @@ export default class TodoDrag {
     const { top, left, right } = dom.getBoundingClientRect();
     dom.style.width = `${right - left}px`;
 
-    const placeholder = new DragPlaceholder();
-    dom.parentNode.parentNode.insertBefore(
-      placeholder.getDom(),
-      dom.parentNode
-    );
+    const placeholder = dom.cloneNode(true);
+    placeholder.classList.add("todo-place-holder");
+    dom.parentNode.parentNode.insertBefore(placeholder, dom.parentNode);
 
     let bodyEvents = [];
     dom.parentNode.remove(); // remove li from column;

@@ -1,6 +1,11 @@
 import { Element } from "../basic";
 import "./Log.css";
 
+function formatDatetime(str) {
+  const date = new Date(str);
+  return `${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+}
+
 export default class Log extends Element {
   /**
    *
@@ -16,7 +21,13 @@ export default class Log extends Element {
    */
   constructor(log) {
     super("div", { class: "log" });
-    const content = new Element("div", { text: log.todoContent });
+    const content = new Element("div");
+    content.getDom().innerHTML = log.todoContent;
+    const timeDiv = new Element("div", {
+      text: formatDatetime(log.createdAt),
+      class: "time-content",
+    });
     this.appendChild(content);
+    this.appendChild(timeDiv);
   }
 }
