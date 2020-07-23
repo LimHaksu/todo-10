@@ -64,6 +64,12 @@ function editTodoApi(todo_id, todo_content) {
   });
 }
 
+function moveTodoApi(todo_id, next_idx, next_column_id) {
+  return fetchWrapper("/api/todo_move", "PATCH", {
+    body: { todo_id, next_idx, next_column_id },
+  });
+}
+
 function loadLogsApi() {
   return fetchWrapper("/api/logs", "GET", {});
 }
@@ -82,6 +88,7 @@ function modifyColumnApi(column_id, next_column_content) {
 export default {
   addTodoApi,
   removeTodoApi,
+  moveTodoApi,
   loadTodoApi,
   editTodoApi,
   modifyColumnApi,
