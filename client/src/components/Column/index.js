@@ -13,6 +13,7 @@ export default class Column extends Element {
    */
   constructor(id, title, todos = []) {
     super("div", { class: "column" });
+    this.getDom().columnId = id;
     const header = new Element("div", { class: "column-header" });
 
     const headerLeft = new Element("div", { class: "flex" });

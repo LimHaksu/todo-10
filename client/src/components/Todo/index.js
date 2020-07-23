@@ -10,6 +10,7 @@ import ModalConfirm from "../basic/ModalConfirm";
 export default class Todo extends Element {
   constructor({ id, content, username }) {
     super("div", { class: ["todo", "flex"] });
+    this.getDom().todoId = id;
     const iconDiv = new Element("i", { class: ["fas", "fa-archive"] });
 
     const centerDiv = new Element("div", {
