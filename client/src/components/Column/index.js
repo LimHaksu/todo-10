@@ -1,37 +1,35 @@
 import { List, Element, H, Todo, Button } from "../basic";
 import ModalColumnTitleEdit from "../ModalColumnTitleEdit";
 import NewTodoForm from "./NewTodoForm";
+import apiCallWrapper from "../../lib/apiCallWrapper";
 import "./Column.scss";
-
-const onTitleEdit = (id, content) => {
-  alert("제목 수정 버튼 클릭");
-};
-
-const handleColumnTitleDoubleClick = (event, columnTitle) => {
-  event.preventDefault();
-  new ModalColumnTitleEdit({ id: 1, columnTitle, onEdit: onTitleEdit });
-};
+import LogEvent from "../../lib/LogEvent";
 
 export default class Column extends Element {
   /**
    *
-   * @param {string} title
-   * @param {Todo[]} todos
+   * @param {string} content
+   * @param {{todo_id, Todo}[]} todos
    */
-  constructor(title, todos = []) {
+  constructor(id, title, todos = []) {
     super("div", { class: "column" });
+    this.getDom().columnId = id;
     const header = new Element("div", { class: "column-header" });
 
     const headerLeft = new Element("div", { class: "flex" });
+    this.$id = id;
     this.$count = new Element("div", {
       text: "" + todos.length,
       class: "column-todo-count",
     });
+    this.addEventListener("refreshcount", (evt) => {
+      this.refreshCount();
+    });
     headerLeft.appendChild(this.$count);
 
     this.$title = new H(2, title, {
-      ondblclick: (event) => {
-        handleColumnTitleDoubleClick(event, title);
+      ondblclick: () => {
+        this.showColumnEditModal();
       },
     });
     headerLeft.appendChild(this.$title);
@@ -40,11 +38,16 @@ export default class Column extends Element {
     this.$newBtn = new Button(
       "+",
       (evt) => {
-        alert("+ button clicked");
+        if (this.$newTodoForm.$isDisplay) {
+          this.$newTodoForm.setDisplayNone(true);
+        } else {
+          this.$newTodoForm.setDisplayNone(false);
+        }
       },
       { class: ["reset-button-style"] }
     );
     headerRight.appendChild(this.$newBtn);
+    this.isNewBtnHidden = true;
     this.$dotBtn = new Button(
       "...",
       (evt) => {
@@ -58,11 +61,12 @@ export default class Column extends Element {
     header.appendChild(headerRight);
     this.appendChild(header);
 
-    this.$newTodoForm = new NewTodoForm();
+    this.$newTodoForm = new NewTodoForm(id, this.addTodo.bind(this));
     this.appendChild(this.$newTodoForm);
 
-    this.$todos = new List(true);
     const todosWrapper = new Element("div", { class: "column-todos-wrapper" });
+
+    this.$todos = new List(true);
     todosWrapper.appendChild(this.$todos);
     this.appendChild(todosWrapper);
 
@@ -74,12 +78,37 @@ export default class Column extends Element {
   /**
    * @private
    */
+  showColumnEditModal() {
+    const onTitleEdit = async (content) => {
+      if (content.length === 0) return;
+      const response = await apiCallWrapper.modifyColumnApi(this.$id, content);
+      this.setTitle(response.next_column_content);
+
+      // Create log event
+      const logEvent = new LogEvent("column_update", {
+        logId: response.log_id,
+        prevColumnContent: response.prev_column_content,
+        nextColumnContent: response.next_column_content,
+        username: response.username,
+      });
+      this.getDom().dispatchEvent(logEvent);
+    };
+    new ModalColumnTitleEdit({
+      columnTitle: this.$title.getDom().textContent,
+      onEdit: onTitleEdit,
+    });
+  }
+
+  /**
+   * @private
+   */
   refreshCount() {
-    this.$count.setText(this.$todos.getCount());
+    const count = this.$todos.getDom().querySelectorAll(".todo").length;
+    this.$count.setText(count);
   }
 
   addTodo(key, todo) {
-    this.$todos.push(key, todo);
+    this.$todos.pushFront(key, todo);
     this.refreshCount();
   }
 

@@ -1,16 +1,47 @@
 .menu {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 330px;
   height: 100vh;
   background-color: white;
+  box-shadow: -2px 5px 5px black;
   z-index: 1;
+  overflow-x: hidden;
+  transition: transform 0.5s;
 }
 
-.menu-title {
+.menu-title,
+.menu-activity {
   background-color: #f6f8fa;
   padding: 0.9rem;
   border-bottom: 1px solid;
   border-color: #e1e4e8;
+}
+
+.menu-hidden {
+  transform: translateX(105%);
+}
+
+.close-button {
+  font-size: 0.9rem;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu * {
+  color: gray;
+}
+.menu .username {
+  color: blue;
+}
+
+.menu .todo-content {
+  color: black;
+}
+.menu .column-content {
+  color: black;
+  font-weight: bold;
 }

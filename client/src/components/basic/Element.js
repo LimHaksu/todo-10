@@ -6,6 +6,7 @@ export default class Element {
    */
   constructor(tag, option) {
     this.$el = document.createElement(tag);
+    this.$el.$ref = this;
 
     if (!option) return;
     if (option.id) {
@@ -40,6 +41,11 @@ export default class Element {
 
   appendChild(el) {
     this.$el.appendChild(el.$el);
+    return this;
+  }
+
+  insertAdjacentElement(...args) {
+    this.$el.insertAdjacentElement(args[0], args[1].getDom());
     return this;
   }
 

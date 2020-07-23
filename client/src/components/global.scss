@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+}
+h1 {
+  font-family: "Jua", sans-serif;
+}
 .flex {
   display: flex;
 }
@@ -42,6 +48,7 @@
 .reset-button-style {
   border: none;
   cursor: pointer;
+  background: none;
 }
 
 .button-form {
@@ -54,7 +61,7 @@
 }
 
 .button-green {
-  background-color: #94d3a2;
+  background-color: #2ea44e;
   border-color: #89c396;
   color: white;
 }
@@ -62,6 +69,11 @@
 .button-grey {
   background-color: #fafbfc;
   border-color: #999999;
+}
+
+.button-disabled {
+  background-color: #94d3a2;
+  cursor: default;
 }
 
 .form {
@@ -90,4 +102,12 @@
   h3 {
     font-size: 1.5rem;
   }
+}
+
+.display-none {
+  display: none;
+}
+
+textarea {
+  max-height: 400px;
 }
