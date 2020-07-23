@@ -116,7 +116,8 @@ export default class TodoDrag {
       ghostNode.classList.remove("ghost-todo");
       ghostNode.classList.add("todo");
 
-      const col = getColumnFromPoint(evt.clientX, evt.clientY);
+      const { x, y } = placeholder.getBoundingClientRect();
+      const col = getColumnFromPoint(x, y);
       const todoId = ghostNode.todoId;
       const nextColumnId = col.columnId;
       const nextIdx = getNextIdx(evt.clientY, col);
@@ -144,7 +145,6 @@ export default class TodoDrag {
       });
       const columns = document.querySelectorAll(".column");
       Array.from(columns).forEach((column) => {
-        console.log(column);
         column.$ref.refreshCount();
       });
     };
