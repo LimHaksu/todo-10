@@ -81,7 +81,7 @@ function addColumnApi(column_content) {
 }
 
 function removeColumnApi(column_id) {
-  return fetchWrapper("api/colum", "DELETE", { query: { column_id } });
+  return fetchWrapper("api/column", "DELETE", { query: { column_id } });
 }
 
 /**
