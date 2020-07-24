@@ -33,18 +33,15 @@ const getClosestYNextDom = (y, domArray) => {
   return cloesestDom;
 };
 
-const getNextIdx = (y, col) => {
+const getNextIdx = (y, columns) => {
   let idx = 1;
-  const domArray = Array.from(col.querySelectorAll("li"));
-  domArray.some((dom) => {
-    const rectOfDom = dom.getBoundingClientRect();
-    const middleOfDom = (rectOfDom.top + rectOfDom.bottom) / 2;
-    if (middleOfDom < y) {
-      idx++;
-    } else {
-      return true; // some에서 return true는 break 처럼 동작
-    }
-  });
+  const domArray = columns.querySelectorAll("li");
+  for (let dom of domArray) {
+    const { top, bottom } = dom.getBoundingClientRect();
+    const middle = (top + bottom) / 2;
+    if (middle > y) break;
+    idx++;
+  }
   return idx;
 };
 
