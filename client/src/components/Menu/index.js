@@ -7,16 +7,16 @@ function formatLogString(type, data) {
   let result = `<span class="username">${data.username}</span> `;
   switch (type) {
     case "todo_add":
-      result += `added <span class="todo-content">${data.todoContent}</span> to <span class="column-content">${data.columnContent}</span>`;
+      result += `added todo <span class="todo-content">${data.todoContent}</span> to column <span class="column-content">${data.columnContent}</span>`;
       break;
     case "todo_remove":
-      result += `removed <span class="todo-content">${data.todoContent}</span> from <span class="column-content">${data.columnContent}</span>`;
+      result += `removed todo <span class="todo-content">${data.todoContent}</span> from column <span class="column-content">${data.columnContent}</span>`;
       break;
     case "todo_update":
-      result += `edited <span class="todo-content">${data.prevTodoContent}</span> from <span class="todo-content">${data.nextTodoContent}</span>`;
+      result += `edited todo <span class="todo-content">${data.prevTodoContent}</span> from todo <span class="todo-content">${data.nextTodoContent}</span>`;
       break;
     case "todo_move":
-      result += `moved <span class="todo-content">${data.todoContent}</span> from <span class="column-content">${data.prevColumnContent}</span> to <span class="column-content">${data.nextColumnContent}</span>`;
+      result += `moved todo <span class="todo-content">${data.todoContent}</span> from column <span class="column-content">${data.prevColumnContent}</span> to column <span class="column-content">${data.nextColumnContent}</span>`;
       break;
     case "column_update":
       result += `changed column <span class="column-content">${data.prevColumnContent}</span> to <span class="column-content">${data.nextColumnContent}`;
@@ -25,7 +25,7 @@ function formatLogString(type, data) {
       result += `created a column <span class="column-content">${data.columnContent}</span>`;
       break;
     case "column_remove":
-      result += `removed <span class="column-content">${
+      result += `removed column <span class="column-content">${
         data.columnContent
       }</span> with <span class="deleted-todos-count">${
         data.deletedTodosCount

@@ -17,7 +17,7 @@ export default class Column extends Element {
     this.getDom().columnId = id;
     const header = new Element("div", { class: "column-header" });
 
-    const headerLeft = new Element("div", { class: "flex" });
+    const headerLeft = new Element("div", { class: ["flex", "flex-grow1"] });
     this.$id = id;
     this.$count = new Element("div", {
       text: "" + todos.length,
@@ -32,6 +32,7 @@ export default class Column extends Element {
       ondblclick: () => {
         this.showColumnEditModal();
       },
+      class: "flex-grow1",
     });
     headerLeft.appendChild(this.$title);
 
