@@ -13,36 +13,19 @@ function getColumnFromPoint(clientX, clientY) {
   return column;
 }
 
-/**
- * y 좌표 위 todo 중 y 좌표와 가장 가까운 todo의 dom 반환.
- * @param {number} y
- * @param {HTMLElement[]} domArray
- * @returns null | HTMLElement
- */
-function getClosestYNextDom(y, domArray) {
-  let cloesestDom = null;
-  domArray.some((dom) => {
-    const rectOfDom = dom.getBoundingClientRect();
-    const middleOfDom = (rectOfDom.top + rectOfDom.bottom) / 2;
-    if (middleOfDom < y) {
-      cloesestDom = dom;
-    } else {
-      return true; // some에서 return true는 break 처럼 동작
-    }
-  });
-  return cloesestDom;
-}
-
-function getNextIdx(y, columns) {
+// y 좌표가 y보다 위에 있는 li중 마지막 li의 index와 dom 반환
+function getClosestLi(y, columns) {
   let idx = 1;
+  let closestDom = null;
   const domArray = columns.querySelectorAll("li");
   for (let dom of domArray) {
     const { top, bottom } = dom.getBoundingClientRect();
     const middle = (top + bottom) / 2;
     if (middle > y) break;
     idx++;
+    closestDom = dom;
   }
-  return idx;
+  return { idx, dom: closestDom };
 }
 
 function getHandleMousemoveForPlaceHolder(placeholder) {
@@ -50,10 +33,7 @@ function getHandleMousemoveForPlaceHolder(placeholder) {
     const col = getColumnFromPoint(evt.clientX, evt.clientY);
     if (!col) return;
 
-    const closestBeforeTodoLi = getClosestYNextDom(
-      evt.clientY,
-      Array.from(col.querySelectorAll("li"))
-    );
+    const closestBeforeTodoLi = getClosestLi(evt.clientY, col).dom;
 
     if (!closestBeforeTodoLi) {
       col.querySelector("ol").insertAdjacentElement("afterbegin", placeholder);
@@ -117,7 +97,7 @@ export default class TodoDrag {
       const col = getColumnFromPoint(x, y);
       const todoId = ghostNode.todoId;
       const nextColumnId = col.columnId;
-      const nextIdx = getNextIdx(evt.clientY, col);
+      const nextIdx = getClosestLi(evt.clientY, col).idx;
       const response = await api.moveTodoApi(todoId, nextIdx, nextColumnId);
 
       if (response) {
