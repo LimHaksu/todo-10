@@ -43,7 +43,7 @@ export default class NewTodoForm extends Element {
       placeholder: "Enter a note",
     });
     this.$textarea.getDom().addEventListener("input", (event) => {
-      const text = this.getTextInTextarea();
+      const text = this.getTextInTextarea().trim();
       if (text.length > 0) {
         if (text.length > 500) {
           this.$textarea.getDom().value = text.substr(0, 500);
