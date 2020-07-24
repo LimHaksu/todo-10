@@ -80,6 +80,10 @@ function addColumnApi(column_content) {
   });
 }
 
+function removeColumnApi(column_id) {
+  return fetchWrapper("api/colum", "DELETE", { query: { column_id } });
+}
+
 /**
  *
  * @param {integer} column_id
@@ -98,6 +102,7 @@ export default {
   loadTodoApi,
   editTodoApi,
   addColumnApi,
+  removeColumnApi,
   modifyColumnApi,
   loadLogsApi,
 };
