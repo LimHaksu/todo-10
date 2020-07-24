@@ -1,9 +1,10 @@
 import { List, Element, H, Todo, Button } from "../basic";
 import ModalColumnTitleEdit from "../ModalColumnTitleEdit";
 import NewTodoForm from "./NewTodoForm";
-import apiCallWrapper from "../../lib/apiCallWrapper";
-import "./Column.scss";
+import api from "../../lib/apiCallWrapper";
+import ModalConfirm from "../basic/ModalConfirm";
 import LogEvent from "../../lib/LogEvent";
+import "./Column.scss";
 
 export default class Column extends Element {
   /**
@@ -49,10 +50,24 @@ export default class Column extends Element {
     headerRight.appendChild(this.$newBtn);
     this.isNewBtnHidden = true;
     this.$dotBtn = new Button(
-      "...",
-      (evt) => {
-        alert("... button clicked");
-      },
+      "x",
+      async function () {
+        new ModalConfirm(async () => {
+          const result = await api.removeColumnApi(this.$id);
+          const logEvent = new LogEvent("column_remove", {
+            logId: result.log_id,
+            columnId: result.column_id,
+            columnContent: result.column_content,
+            deletedTodosCount: result.deleted_todos_count,
+            username: result.username,
+            createdAt: result.created_at,
+          });
+
+          const parent = this.getDom().parentNode;
+          this.getDom().dispatchEvent(logEvent);
+          this.removeSelf();
+        });
+      }.bind(this),
       { class: ["reset-button-style"] }
     );
     headerRight.appendChild(this.$dotBtn);
@@ -81,7 +96,7 @@ export default class Column extends Element {
   showColumnEditModal() {
     const onTitleEdit = async (content) => {
       if (content.length === 0) return;
-      const response = await apiCallWrapper.modifyColumnApi(this.$id, content);
+      const response = await api.modifyColumnApi(this.$id, content);
       this.setTitle(response.next_column_content);
 
       // Create log event

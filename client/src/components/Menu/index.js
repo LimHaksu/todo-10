@@ -24,6 +24,13 @@ function formatLogString(type, data) {
     case "column_add":
       result += `created a column <span class="column-content">${data.columnContent}</span>`;
       break;
+    case "column_remove":
+      result += `removed <span class="column-content">${
+        data.columnContent
+      }</span> with <span class="deleted-todos-count">${
+        data.deletedTodosCount
+      }</span> ${data.deletedTodosCount === 1 ? "todo" : "todos"}`;
+      break;
     default:
       throw new Error("Invalid log type: " + type);
   }
