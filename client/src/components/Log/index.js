@@ -3,7 +3,9 @@ import "./Log.css";
 
 function formatDatetime(str) {
   const date = new Date(str);
-  return `${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+  return `${date.getFullYear()}/${
+    date.getMonth() + 1
+  }/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
 }
 
 export default class Log extends Element {

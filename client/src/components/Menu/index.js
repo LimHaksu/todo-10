@@ -19,7 +19,17 @@ function formatLogString(type, data) {
       result += `moved <span class="todo-content">${data.todoContent}</span> from <span class="column-content">${data.prevColumnContent}</span> to <span class="column-content">${data.nextColumnContent}</span>`;
       break;
     case "column_update":
-      result += `changed column <span class="todo-content">${data.prevColumnContent}</span> to <span class="column-content">${data.nextColumnContent}`;
+      result += `changed column <span class="column-content">${data.prevColumnContent}</span> to <span class="column-content">${data.nextColumnContent}`;
+      break;
+    case "column_add":
+      result += `created a column <span class="column-content">${data.columnContent}</span>`;
+      break;
+    case "column_remove":
+      result += `removed <span class="column-content">${
+        data.columnContent
+      }</span> with <span class="deleted-todos-count">${
+        data.deletedTodosCount
+      }</span> ${data.deletedTodosCount === 1 ? "todo" : "todos"}`;
       break;
     default:
       throw new Error("Invalid log type: " + type);

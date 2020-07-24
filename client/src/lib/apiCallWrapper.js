@@ -74,6 +74,16 @@ function loadLogsApi() {
   return fetchWrapper("/api/logs", "GET", {});
 }
 
+function addColumnApi(column_content) {
+  return fetchWrapper("/api/column", "POST", {
+    body: { column_content },
+  });
+}
+
+function removeColumnApi(column_id) {
+  return fetchWrapper("api/column", "DELETE", { query: { column_id } });
+}
+
 /**
  *
  * @param {integer} column_id
@@ -91,6 +101,8 @@ export default {
   moveTodoApi,
   loadTodoApi,
   editTodoApi,
+  addColumnApi,
+  removeColumnApi,
   modifyColumnApi,
   loadLogsApi,
 };

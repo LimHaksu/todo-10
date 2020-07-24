@@ -3,6 +3,7 @@ import List from "../basic/List";
 import Column from "../Column";
 import Todo from "../Todo";
 import api from "../../lib/apiCallWrapper";
+import CreateColumnBox from "./CreateColumnBox";
 
 export default class Kanban extends List {
   constructor() {
@@ -27,6 +28,7 @@ export default class Kanban extends List {
         const column = new Column(colData.id, colData.content, todos);
         this.push(colData.id, column);
       });
+      this.push(-1, new CreateColumnBox());
     });
   }
 }

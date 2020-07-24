@@ -7,6 +7,8 @@ async function saveLog(conn, userId, actionType, data) {
     "todo_remove",
     "todo_update",
     "todo_move",
+    "column_add",
+    "column_remove",
     "column_update",
   ];
 
