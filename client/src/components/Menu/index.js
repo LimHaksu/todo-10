@@ -61,13 +61,15 @@ export default class Menu extends Element {
       text: "🔔 Activity",
     });
     this.appendChild(activityTitle);
+    const logsWrapper = new Element("div", { class: "logs-wrapper" });
     this.$logs = new List(true);
-    this.appendChild(this.$logs);
     api.loadLogsApi().then((res) => {
       res.forEach(({ action_type, data }) => {
         this.log(action_type, data);
       });
     });
+    logsWrapper.appendChild(this.$logs);
+    this.appendChild(logsWrapper);
   }
 
   setHidden(flag) {
