@@ -2,16 +2,16 @@ import api from "../../lib/apiCallWrapper";
 import LogEvent from "../../lib/LogEvent";
 import "./TodoDrag.css";
 
-const setDomTopLeft = (dom, top, left) => {
+function setDomTopLeft(dom, top, left) {
   dom.style.top = `${top}px`;
   dom.style.left = `${left}px`;
-};
+}
 
-const getColumnFromPoint = (clientX, clientY) => {
+function getColumnFromPoint(clientX, clientY) {
   const els = document.elementsFromPoint(clientX, clientY);
   const column = els.filter((node) => node.classList.contains("column"))[0];
   return column;
-};
+}
 
 /**
  * y 좌표 위 todo 중 y 좌표와 가장 가까운 todo의 dom 반환.
@@ -19,7 +19,7 @@ const getColumnFromPoint = (clientX, clientY) => {
  * @param {HTMLElement[]} domArray
  * @returns null | HTMLElement
  */
-const getClosestYNextDom = (y, domArray) => {
+function getClosestYNextDom(y, domArray) {
   let cloesestDom = null;
   domArray.some((dom) => {
     const rectOfDom = dom.getBoundingClientRect();
@@ -31,9 +31,9 @@ const getClosestYNextDom = (y, domArray) => {
     }
   });
   return cloesestDom;
-};
+}
 
-const getNextIdx = (y, columns) => {
+function getNextIdx(y, columns) {
   let idx = 1;
   const domArray = columns.querySelectorAll("li");
   for (let dom of domArray) {
@@ -43,9 +43,9 @@ const getNextIdx = (y, columns) => {
     idx++;
   }
   return idx;
-};
+}
 
-const getHandleMousemoveForPlaceHolder = (placeholder) => {
+function getHandleMousemoveForPlaceHolder(placeholder) {
   return (evt) => {
     const col = getColumnFromPoint(evt.clientX, evt.clientY);
     if (!col) return;
@@ -61,13 +61,13 @@ const getHandleMousemoveForPlaceHolder = (placeholder) => {
       closestBeforeTodoLi.insertAdjacentElement("afterend", placeholder);
     }
   };
-};
+}
 
-const getHandleMousemove = (dom, offsetX, offsetY) => {
+function getHandleMousemove(dom, offsetX, offsetY) {
   return (evt) => {
     setDomTopLeft(dom, evt.clientY - offsetY, evt.clientX - offsetX);
   };
-};
+}
 
 export default class TodoDrag {
   constructor(dom, offsetX, offsetY) {
