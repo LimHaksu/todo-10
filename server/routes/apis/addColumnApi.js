@@ -20,12 +20,16 @@ export default (req, res) => {
   useDbConnection(async (conn) => {
     const [[row]] = await conn.query(countColumns, [user.id]);
     const columnIdx = row.numOfcolumns + 1;
-    await conn.query(createColumnApi, [columnIdx, columnContent, user.id]);
+    const [resultOfInsert] = await conn.query(createColumnApi, [
+      columnIdx,
+      columnContent,
+      user.id,
+    ]);
     const log = await saveLog(conn, user.id, "column_add", { columnContent });
-
     res.json({
       result: {
         log_id: log.id,
+        column_id: resultOfInsert.insertId,
         column_content: columnContent,
         username: user.username,
         created_at: log.created_at,
