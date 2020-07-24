@@ -1,5 +1,7 @@
 import { useDbConnection, saveLog, checkUser } from "../../lib";
 
+const countColumns =
+  "SELECT COUNT(*) as numOfcolumns FROM todo_column WHERE user_id = ?";
 const createColumnApi =
   "INSERT INTO todo_column (idx, content, user_id) VALUES(?, ?, ?)";
 export default (req, res) => {
@@ -16,8 +18,9 @@ export default (req, res) => {
   }
 
   useDbConnection(async (conn) => {
-    //TODO remove hardcoded idx
-    await conn.query(createColumnApi, [4, columnContent, user.id]);
+    const [[row]] = await conn.query(countColumns, [user.id]);
+    const columnIdx = row.numOfcolumns + 1;
+    await conn.query(createColumnApi, [columnIdx, columnContent, user.id]);
     const log = await saveLog(conn, user.id, "column_add", { columnContent });
 
     res.json({
